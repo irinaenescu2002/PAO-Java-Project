@@ -76,4 +76,14 @@ public class Horse {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "{Name: " + name +
+                ", Breed: " + breed +
+                ", Color: " + color +
+                ", Category: " + category +
+                ", BirthDate: " + birthDate +
+                ", Stable: " + stable + "}";
+    }
 }

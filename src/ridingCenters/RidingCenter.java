@@ -115,6 +115,7 @@ public class RidingCenter {
         return "Name: " + name +
                 ", Location (" + location + ")" +
                 ", Open: " + startProgram +
-                ", Close: " + endProgram;
+                ", Close: " + endProgram + "\n" +
+                "Horses: " + horses;
     }
 }

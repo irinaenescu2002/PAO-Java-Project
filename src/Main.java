@@ -1,3 +1,5 @@
+import horses.Category;
+import horses.Horse;
 import ridingCenters.Location;
 import ridingCenters.RidingCenter;
 
@@ -124,6 +126,50 @@ public class Main {
                     service.showRidingCenters();
                     System.out.println();
                     break;
+                }
+                case "6" -> {
+                    System.out.println("Enter the ID of the riding center to which you want to add this horse.");
+                    System.out.println("Riding Center ID: ");
+                    String ridingCenterId = scanner.next();
+                    RidingCenter ridingCenter = service.getRidingCenterById(Integer.parseInt(ridingCenterId));
+                    if (ridingCenter == null){
+                        System.out.println("There is no riding center with this ID!\n");
+                        break;
+                    }
+                    else {
+                        System.out.println("Please enter details about the new horse!");
+                        System.out.println("Name: ");
+                        String name = scanner.next();
+                        System.out.println("Breed: ");
+                        String breed = scanner.next();
+                        System.out.println("Color: ");
+                        String color = scanner.next();
+                        System.out.println("Stable: ");
+                        String stable = scanner.next();
+                        System.out.println("BirthDate: ");
+                        String birthDate = scanner.next();
+                        System.out.println("Please enter the number of the category!\n 1.DRESSAGE \n 2.SHOWJUMPING \n 3.RIDING");
+                        System.out.println("Category: ");
+                        String categoryId = scanner.next();
+                        Category category = null;
+                        switch (categoryId){
+                            case "1" -> {
+                                category = Category.DRESSAGE;
+                            }
+                            case "2" -> {
+                                category = Category.SHOWJUMPING;
+                            }
+                            case "3" -> {
+                                category = Category.RIDING;
+                            }
+                        }
+
+                        service.addHorseToRidingCenter(new Horse(name, breed, color, category, birthDate, Integer.parseInt(stable)), Integer.parseInt(ridingCenterId));
+                        System.out.println("\nHorse added successfully!");
+                        System.out.println();
+                        break;
+
+                    }
                 }
             }
         } while (!command.equals("0"));
