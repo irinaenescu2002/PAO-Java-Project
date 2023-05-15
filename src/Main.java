@@ -1,5 +1,6 @@
 import horses.Category;
 import horses.Horse;
+import people.Client;
 import ridingCenters.Location;
 import ridingCenters.RidingCenter;
 
@@ -127,6 +128,22 @@ public class Main {
                     System.out.println();
                     break;
                 }
+                case "5" -> {
+                    System.out.println("Please enter details about the new client!");
+                    System.out.println("Last Name: ");
+                    String lastName = scanner.next();
+                    System.out.println("First Name: ");
+                    String firstName = scanner.next();
+                    System.out.println("Phone: ");
+                    String phone = scanner.next();
+                    System.out.println("Email: ");
+                    String email = scanner.next();
+
+                    service.addClient(new Client(lastName, firstName, phone, email));
+                    System.out.println("Client added successfully!");
+                    System.out.println();
+                    break;
+                }
                 case "6" -> {
                     System.out.println("Enter the ID of the riding center to which you want to add this horse.");
                     System.out.println("Riding Center ID: ");
@@ -171,9 +188,13 @@ public class Main {
 
                     }
                 }
+                case "9" -> {
+                    System.out.println("These are all the clients of our riding centers!");
+                    service.showClients();
+                    System.out.println();
+                    break;
+                }
             }
         } while (!command.equals("0"));
-
     }
-
 }

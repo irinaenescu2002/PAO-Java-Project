@@ -1,16 +1,19 @@
 import horses.Category;
 import horses.Horse;
+import people.Client;
 import ridingCenters.Location;
 import ridingCenters.RidingCenter;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Service {
 
     private List<RidingCenter> ridingCenters = new ArrayList<>();
     private List<Location> locations = new ArrayList<>();
-    private List<Category> categories = new ArrayList<>();
+    private List<Client> clients = new ArrayList<>();
 
     public void printMenu(){
         System.out.println("MENU");
@@ -23,6 +26,7 @@ public class Service {
         System.out.println("6. Add a new horse to a riding center");
         System.out.println("7. Add a new employee to a riding center");
         System.out.println("8. Add a new arena to a riding center");
+        System.out.println("9. Show details about all clients");
         System.out.println();
     }
 
@@ -72,6 +76,20 @@ public class Service {
         RidingCenter ridingCenter = getRidingCenterById(ridingCenterId);
         List <Horse> horses = ridingCenter.getHorses();
         horses.add(_horse);
+        horses = horses.stream().sorted(Comparator.comparing(Horse::getName)).collect(Collectors.toList());
         ridingCenter.setHorses(horses);
+    }
+
+    public void addClient(Client client) {
+        clients.add(client);
+        clients = clients.stream().sorted(Comparator.comparing(Client::getLastName).thenComparing(Client::getFirstName)).collect(Collectors.toList());
+    }
+
+    public void showClients() {
+        int i = 0;
+        for (Client client : clients){
+            i = i + 1;
+            System.out.println(i + ". " + client);
+        }
     }
 }

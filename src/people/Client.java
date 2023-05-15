@@ -8,7 +8,7 @@ public class Client implements Person {
     private String phone;
     private String email;
 
-    public Client(String firstName, String lastName, String phone, String email) {
+    public Client(String lastName, String firstName, String phone, String email) {
         this.id = ++idCounter;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -60,5 +60,13 @@ public class Client implements Person {
     public void contactDetails() {
         System.out.println("Phone: " + this.phone);
         System.out.println("Email: " + this.email);
+    }
+
+    @Override
+    public String toString() {
+        return "Last Name: " + lastName +
+                ", First Name: " + firstName +
+                ", Phone: " + phone +
+                ", Email: " + email;
     }
 }
