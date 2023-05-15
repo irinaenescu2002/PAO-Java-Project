@@ -1,6 +1,8 @@
 import horses.Category;
 import horses.Horse;
 import people.Client;
+import people.Employee;
+import people.Trainer;
 import ridingCenters.Location;
 import ridingCenters.RidingCenter;
 
@@ -91,5 +93,13 @@ public class Service {
             i = i + 1;
             System.out.println(i + ". " + client);
         }
+    }
+
+    public void addEmployeeToRidingCenter(Employee newEmployee, int ridingCenterId) {
+        RidingCenter ridingCenter = getRidingCenterById(ridingCenterId);
+        List <Employee> employees = ridingCenter.getEmployees();
+        employees.add(newEmployee);
+        employees = employees.stream().sorted(Comparator.comparing(Employee::getLastName).thenComparing(Employee::getFirstName)).collect(Collectors.toList());
+        ridingCenter.setEmployees(employees);
     }
 }

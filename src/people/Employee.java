@@ -119,4 +119,20 @@ public class Employee implements Person{
             System.out.println("- " + day);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", hireDate='" + hireDate + '\'' +
+                ", salary=" + salary +
+                ", officeNumber=" + officeNumber +
+                ", workDays=" + workDays +
+                '}';
+    }
 }

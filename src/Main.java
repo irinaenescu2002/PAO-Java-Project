@@ -1,9 +1,14 @@
 import horses.Category;
 import horses.Horse;
+import people.Caretaker;
 import people.Client;
+import people.Trainer;
 import ridingCenters.Location;
 import ridingCenters.RidingCenter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -186,6 +191,71 @@ public class Main {
                         System.out.println();
                         break;
 
+                    }
+                }
+                case "7" -> {
+                    System.out.println("Enter the ID of the riding center to which you want to add this horse.");
+                    System.out.println("Riding Center ID: ");
+                    String ridingCenterId = scanner.next();
+                    RidingCenter ridingCenter = service.getRidingCenterById(Integer.parseInt(ridingCenterId));
+                    if (ridingCenter == null){
+                        System.out.println("There is no riding center with this ID!\n");
+                        break;
+                    }
+                    else {
+                        System.out.println("Please enter details about the new employee!");
+                        System.out.println("Last Name: ");
+                        String lastName = scanner.next();
+                        System.out.println("First Name: ");
+                        String firstName = scanner.next();
+                        System.out.println("BirthDate: ");
+                        String birthDate = scanner.next();
+                        System.out.println("Phone: ");
+                        String phone = scanner.next();
+                        System.out.println("Email: ");
+                        String email = scanner.next();
+                        System.out.println("Hire Date: ");
+                        String hireDate = scanner.next();
+                        System.out.println("Salary: ");
+                        String salary = scanner.next();
+                        System.out.println("Office Number: ");
+                        String officeNumber = scanner.next();
+                        System.out.println("Work Days: ");
+                        String workDays = scanner.next();
+                        System.out.println("Please enter the number of the employee type!\n 1.TRAINER\n 2.CARETAKER");
+                        System.out.println("Employee Type: ");
+                        String type = scanner.next();
+                        switch (type){
+                            case "1" -> {
+                                System.out.println("Skills: ");
+                                String skills = scanner.next();
+                                System.out.println("Qualification: ");
+                                String qualification = scanner.next();
+
+                                Trainer newEmployee = new Trainer(firstName, lastName, birthDate, phone,
+                                        email, hireDate, Integer.parseInt(salary), Integer.parseInt(officeNumber)
+                                        , Arrays.stream(workDays.split(",")).toList(), Arrays.stream(skills.split(",")).toList(), qualification);
+
+                                service.addEmployeeToRidingCenter(newEmployee, Integer.parseInt(ridingCenterId));
+                            }
+                            case "2" -> {
+                                System.out.println("Stables: ");
+                                String stables = scanner.next();
+                                String [] splitStables = stables.split(",");
+                                System.out.println(splitStables);
+                                List<Integer> goodStables = new ArrayList<>();
+                                for (String stable : splitStables){
+                                    goodStables.add(Integer.parseInt(stable));
+                                }
+                                System.out.println(goodStables);
+
+                                Caretaker newEmployee = new Caretaker(firstName, lastName, birthDate, phone,
+                                        email, hireDate, Integer.parseInt(salary), Integer.parseInt(officeNumber)
+                                        , Arrays.stream(workDays.split(",")).toList(), goodStables);
+
+                                service.addEmployeeToRidingCenter(newEmployee, Integer.parseInt(ridingCenterId));
+                            }
+                        }
                     }
                 }
                 case "9" -> {

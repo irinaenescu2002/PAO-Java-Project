@@ -116,6 +116,7 @@ public class RidingCenter {
                 ", Location (" + location + ")" +
                 ", Open: " + startProgram +
                 ", Close: " + endProgram + "\n" +
-                "Horses: " + horses;
+                "Horses: " + horses + "\n" +
+                "Employees: " + employees;
     }
 }

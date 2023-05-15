@@ -18,4 +18,11 @@ public class Caretaker extends Employee{
     public void setStables(List<Integer> stables) {
         this.stables = stables;
     }
+
+    @Override
+    public String toString() {
+        return "Caretaker{" +
+                "stables=" + stables +
+                '}';
+    }
 }

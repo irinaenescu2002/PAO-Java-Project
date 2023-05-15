@@ -27,4 +27,12 @@ public class Trainer extends Employee {
     public void setQualification(String qualification) {
         this.qualification = qualification;
     }
+
+    @Override
+    public String toString() {
+        return "Trainer{" +
+                "skills=" + skills +
+                ", qualification='" + qualification + '\'' +
+                '}';
+    }
 }
