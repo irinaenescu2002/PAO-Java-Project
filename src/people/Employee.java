@@ -122,17 +122,15 @@ public class Employee implements Person{
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthDate='" + birthDate + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", hireDate='" + hireDate + '\'' +
-                ", salary=" + salary +
-                ", officeNumber=" + officeNumber +
-                ", workDays=" + workDays +
+        return "First Name: " + firstName +
+                ", Last Name: " + lastName +
+                ", Birthdate: " + birthDate +
+                ", Phone: " + phone +
+                ", Email: " + email +
+                ", Hire Date: " + hireDate +
+                ", Salary: " + salary + " ron" +
+                ", Office Number: " + officeNumber +
+                ", Work Days: " + workDays +
                 '}';
     }
 }

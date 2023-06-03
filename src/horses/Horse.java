@@ -6,12 +6,13 @@ public class Horse {
     private int id;
     private String name;
     private String breed;
+    private String sex;
     private String color;
     private Category category;
     private String birthDate;
     private int stable;
 
-    public Horse(String name, String breed, String color, Category category, String birthDate, int stable) {
+    public Horse(String name, String breed, String sex, String color, Category category, String birthDate, int stable) {
         this.id = ++idCounter;
         this.name = name;
         this.breed = breed;
@@ -19,6 +20,7 @@ public class Horse {
         this.category = category;
         this.birthDate = birthDate;
         this.stable = stable;
+        this.sex = sex;
     }
 
     public String getName() {
@@ -77,10 +79,19 @@ public class Horse {
         this.id = id;
     }
 
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
     @Override
     public String toString() {
         return "{Name: " + name +
                 ", Breed: " + breed +
+                ", Sex: " + sex +
                 ", Color: " + color +
                 ", Category: " + category +
                 ", BirthDate: " + birthDate +

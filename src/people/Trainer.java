@@ -30,9 +30,9 @@ public class Trainer extends Employee {
 
     @Override
     public String toString() {
-        return "Trainer{" +
-                "skills=" + skills +
-                ", qualification='" + qualification + '\'' +
+        return "Trainer{" + super.toString() + ", " +
+                "Skills: " + skills +
+                ", Qualification: '" + qualification + '\'' +
                 '}';
     }
 }

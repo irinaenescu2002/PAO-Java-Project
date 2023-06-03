@@ -2,25 +2,24 @@ package appointments;
 
 import horses.Horse;
 import people.Client;
+import people.Employee;
 import people.Trainer;
 import ridingCenters.Arena;
 import ridingCenters.RidingCenter;
 
 public class Appointment {
     private RidingCenter ridingCenter;
-    private Trainer trainer;
+    private Employee trainer;
     private Client client;
     private Horse horse;
-    private Arena arena;
     private String startHour;
     private String endHour;
 
-    public Appointment(RidingCenter ridingCenter, Trainer trainer, Client client, Horse horse, Arena arena, String startHour, String endHour) {
+    public Appointment(RidingCenter ridingCenter, Employee trainer, Client client, Horse horse, String startHour, String endHour) {
         this.ridingCenter = ridingCenter;
         this.trainer = trainer;
         this.client = client;
         this.horse = horse;
-        this.arena = arena;
         this.startHour = startHour;
         this.endHour = endHour;
     }
@@ -33,11 +32,11 @@ public class Appointment {
         this.ridingCenter = ridingCenter;
     }
 
-    public Trainer getTrainer() {
+    public Employee getTrainer() {
         return trainer;
     }
 
-    public void setTrainer(Trainer trainer) {
+    public void setTrainer(Employee trainer) {
         this.trainer = trainer;
     }
 
@@ -57,14 +56,6 @@ public class Appointment {
         this.horse = horse;
     }
 
-    public Arena getArena() {
-        return arena;
-    }
-
-    public void setArena(Arena arena) {
-        this.arena = arena;
-    }
-
     public String getStartHour() {
         return startHour;
     }
@@ -79,5 +70,16 @@ public class Appointment {
 
     public void setEndHour(String endHour) {
         this.endHour = endHour;
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "RidingCenter: " + ridingCenter.getName() +
+                ", Trainer: " + trainer.getFirstName() + " " + trainer.getLastName() + " (" + trainer.getEmail() + ") " +
+                ", Horse: " + horse.getName() + " (" + horse.getBirthDate() + ") " +
+                ", Start Hour: " + startHour +
+                ", End Hour=" + endHour +
+                '}';
     }
 }

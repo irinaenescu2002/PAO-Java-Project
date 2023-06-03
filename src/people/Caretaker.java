@@ -21,8 +21,8 @@ public class Caretaker extends Employee{
 
     @Override
     public String toString() {
-        return "Caretaker{" +
-                "stables=" + stables +
+        return "Caretaker{" + super.toString() + ", " +
+                "Stables=" + stables +
                 '}';
     }
 }

@@ -4,6 +4,7 @@ import horses.Horse;
 import people.Employee;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class RidingCenter {
@@ -15,7 +16,7 @@ public class RidingCenter {
     private int stableNumber;
     private String startProgram;
     private String endProgram;
-    private List<Arena> arenas = new ArrayList<>();
+    private HashSet<Arena> arenas = new HashSet<>();
     private List<Employee> employees = new ArrayList<>();
     private List<Horse> horses = new ArrayList<>();
 
@@ -86,11 +87,11 @@ public class RidingCenter {
         this.stableNumber = stableNumber;
     }
 
-    public List<Arena> getArenas() {
+    public HashSet<Arena> getArenas() {
         return arenas;
     }
 
-    public void setArenas(List<Arena> arenas) {
+    public void setArenas(HashSet<Arena> arenas) {
         this.arenas = arenas;
     }
 
@@ -112,11 +113,13 @@ public class RidingCenter {
 
     @Override
     public String toString() {
-        return "Name: " + name +
-                ", Location (" + location + ")" +
-                ", Open: " + startProgram +
+
+        return "Name: " + name + "\n" +
+                "   Location (" + location + ")" + "\n"+
+                "   Open: " + startProgram +
                 ", Close: " + endProgram + "\n" +
-                "Horses: " + horses + "\n" +
-                "Employees: " + employees;
+                "   Horses: " + horses + "\n" +
+                "   Employees: " + employees + "\n" +
+                "   Arenas: " + arenas;
     }
 }

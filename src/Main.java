@@ -1,22 +1,22 @@
+import appointments.Appointment;
 import horses.Category;
 import horses.Horse;
 import people.Caretaker;
 import people.Client;
+import people.Employee;
 import people.Trainer;
+import ridingCenters.Arena;
 import ridingCenters.Location;
 import ridingCenters.RidingCenter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
 
         Service service = new Service();
         Scanner scanner = new Scanner(System.in);
-
+        service.addRecords();
         String command;
 
         do {
@@ -43,14 +43,11 @@ public class Main {
                     System.out.println();
                     System.out.println("Location added successfully!");
                     System.out.println();
-                    break;
-
                 }
                 case "2" -> {
                     System.out.println("These are all the locations where you can find our riding centers!");
                     service.showLocation();
                     System.out.println();
-                    break;
                 }
                 case "3" -> {
                     System.out.println("Before introducing a new riding center make sure that there is a location for it!");
@@ -99,12 +96,11 @@ public class Main {
                             service.addRidingCenter(new RidingCenter(name, _location, arenaNumber, stableNumber, startProgram, endProgram));
                             System.out.println("Riding center added successfully!");
                             System.out.println();
-                            break;
+
 
                         } else {
                             System.out.println("If you entered the wrong location, run the command to add a new riding center again!");
                             System.out.println();
-                            break;
                         }
                     } else {
                         System.out.println("Now enter details about the new riding center!");
@@ -124,14 +120,12 @@ public class Main {
                         service.addRidingCenter(new RidingCenter(name, _location, arenaNumber, stableNumber, startProgram, endProgram));
                         System.out.println("Riding center added successfully!");
                         System.out.println();
-                        break;
                     }
                 }
                 case "4" -> {
-                    System.out.println("These are our riding centers!");
+                    System.out.println("These are our riding centers!\n");
                     service.showRidingCenters();
                     System.out.println();
-                    break;
                 }
                 case "5" -> {
                     System.out.println("Please enter details about the new client!");
@@ -147,7 +141,6 @@ public class Main {
                     service.addClient(new Client(lastName, firstName, phone, email));
                     System.out.println("Client added successfully!");
                     System.out.println();
-                    break;
                 }
                 case "6" -> {
                     System.out.println("Enter the ID of the riding center to which you want to add this horse.");
@@ -156,7 +149,6 @@ public class Main {
                     RidingCenter ridingCenter = service.getRidingCenterById(Integer.parseInt(ridingCenterId));
                     if (ridingCenter == null){
                         System.out.println("There is no riding center with this ID!\n");
-                        break;
                     }
                     else {
                         System.out.println("Please enter details about the new horse!");
@@ -164,6 +156,8 @@ public class Main {
                         String name = scanner.next();
                         System.out.println("Breed: ");
                         String breed = scanner.next();
+                        System.out.println("Sex: ");
+                        String sex = scanner.next();
                         System.out.println("Color: ");
                         String color = scanner.next();
                         System.out.println("Stable: ");
@@ -175,32 +169,23 @@ public class Main {
                         String categoryId = scanner.next();
                         Category category = null;
                         switch (categoryId){
-                            case "1" -> {
-                                category = Category.DRESSAGE;
-                            }
-                            case "2" -> {
-                                category = Category.SHOWJUMPING;
-                            }
-                            case "3" -> {
-                                category = Category.RIDING;
-                            }
+                            case "1" -> category = Category.DRESSAGE;
+                            case "2" -> category = Category.SHOWJUMPING;
+                            case "3" -> category = Category.RIDING;
                         }
 
-                        service.addHorseToRidingCenter(new Horse(name, breed, color, category, birthDate, Integer.parseInt(stable)), Integer.parseInt(ridingCenterId));
+                        service.addHorseToRidingCenter(new Horse(name, breed, sex, color, category, birthDate, Integer.parseInt(stable)), Integer.parseInt(ridingCenterId));
                         System.out.println("\nHorse added successfully!");
                         System.out.println();
-                        break;
-
                     }
                 }
                 case "7" -> {
-                    System.out.println("Enter the ID of the riding center to which you want to add this horse.");
+                    System.out.println("Enter the ID of the riding center to which you want to add this employee.");
                     System.out.println("Riding Center ID: ");
                     String ridingCenterId = scanner.next();
                     RidingCenter ridingCenter = service.getRidingCenterById(Integer.parseInt(ridingCenterId));
                     if (ridingCenter == null){
                         System.out.println("There is no riding center with this ID!\n");
-                        break;
                     }
                     else {
                         System.out.println("Please enter details about the new employee!");
@@ -242,7 +227,7 @@ public class Main {
                                 System.out.println("Stables: ");
                                 String stables = scanner.next();
                                 String [] splitStables = stables.split(",");
-                                System.out.println(splitStables);
+                                System.out.println(Arrays.toString(splitStables));
                                 List<Integer> goodStables = new ArrayList<>();
                                 for (String stable : splitStables){
                                     goodStables.add(Integer.parseInt(stable));
@@ -254,15 +239,84 @@ public class Main {
                                         , Arrays.stream(workDays.split(",")).toList(), goodStables);
 
                                 service.addEmployeeToRidingCenter(newEmployee, Integer.parseInt(ridingCenterId));
+
                             }
                         }
+
+                        System.out.println("\nEmployee added successfully!\n");
+                    }
+                }
+                case "8" -> {
+                    System.out.println("Enter the ID of the riding center to which you want to add this arena.");
+                    System.out.println("Riding Center ID: ");
+                    String ridingCenterId = scanner.next();
+                    RidingCenter ridingCenter = service.getRidingCenterById(Integer.parseInt(ridingCenterId));
+                    if (ridingCenter == null){
+                        System.out.println("There is no riding center with this ID!\n");
+                    }
+                    else {
+                        System.out.println("Please enter details about the new arena!");
+                        System.out.println("Number: ");
+                        String number = scanner.next();
+                        System.out.println("Surface: ");
+                        String surface = scanner.next();
+                        service.addArenaToRidingCenter(new Arena(Integer.parseInt(number), Integer.parseInt(surface)), Integer.parseInt(ridingCenterId));
+
+                        System.out.println();
+                        System.out.println("Arena added successfully!");
+                        System.out.println();
                     }
                 }
                 case "9" -> {
                     System.out.println("These are all the clients of our riding centers!");
                     service.showClients();
                     System.out.println();
-                    break;
+                }
+                case "10" -> {
+                    try {
+                        System.out.println("Please enter details about the appointment! ");
+                        System.out.println("Client First Name: ");
+                        String clientFirstName = scanner.next();
+                        System.out.println("Client Last Name: ");
+                        String clientLastName = scanner.next();
+                        Client client = service.getClientByName(clientFirstName, clientLastName);
+                        if (client == null){
+                            String clientID = scanner.next();
+                            client = service.getClientByID(Integer.parseInt(clientID));
+                        }
+                        System.out.println("Riding Center ID: ");
+                        String ridingCenterID = scanner.next();
+                        RidingCenter ridingCenter = service.getRidingCenterById(Integer.parseInt(ridingCenterID));
+                        System.out.println("Trainer First Name: ");
+                        String trainerFirstName = scanner.next();
+                        System.out.println("Trainer Last Name: ");
+                        String trainerLastName = scanner.next();
+                        Employee trainer = service.getTrainerByName(trainerFirstName, trainerLastName, Integer.parseInt(ridingCenterID));
+                        if (trainer == null) {
+                            String trainerID = scanner.next();
+                            trainer = service.getTrainerByID(Integer.parseInt(trainerID), Integer.parseInt(ridingCenterID));
+                        }
+                        System.out.println("Horse Name: ");
+                        String horseName = scanner.next();
+                        Horse horse = service.getHorseByName(horseName, Integer.parseInt(ridingCenterID));
+                        if (horse == null) {
+                            String horseId = scanner.next();
+                            horse = service.getHorseById(Integer.parseInt(horseId), Integer.parseInt(ridingCenterID));
+                        }
+                        System.out.println("Start hour: ");
+                        String start = scanner.next();
+                        System.out.println("End Hour: ");
+                        String end = scanner.next();
+                        service.addAppointment(new Appointment(ridingCenter, trainer, client, horse, start, end));
+                        System.out.println("\nAppointment added successfully!\n");
+                    } catch (NoSuchElementException ex){
+                        System.out.println("\nNo horse, trainer or client with that name at that riding center!\n");
+                    }
+                }
+                case "11" -> {
+                    System.out.println("These are all the appointments of our riding centers!\n");
+                    service.showAppointments();
+                    System.out.println();
                 }
             }
         } while (!command.equals("0"));
