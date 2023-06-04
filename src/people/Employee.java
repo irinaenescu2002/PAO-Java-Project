@@ -1,5 +1,8 @@
 package people;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -114,11 +117,24 @@ public class Employee implements Person{
     public void contactDetails() {
         System.out.println("Phone: " + this.phone);
         System.out.println("Email: " + this.email);
-        System.out.print("Office: " + this.officeNumber);
+        System.out.println("Office: " + this.officeNumber);
         System.out.println("Our employee can be found at the office on the following days: ");
         for (String day : workDays){
             System.out.println("- " + day);
         }
+    }
+
+    @Override
+    public void getAge(){
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate birthDate = LocalDate.parse(getBirthDate(), format);
+        LocalDate currentDate = LocalDate.now();
+        Period period = Period.between(birthDate, currentDate);
+        System.out.println();
+        System.out.print(lastName + " " + firstName + " - " + period.getYears() + " years");
+        LocalDate hireDate = LocalDate.parse(getHireDate(), format);
+        Period period1 = Period.between(hireDate, currentDate);
+        System.out.println(", our employee for " + period1.getYears() + " years");
     }
 
     @Override

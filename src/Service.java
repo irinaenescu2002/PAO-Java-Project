@@ -40,6 +40,8 @@ public class Service {
         System.out.println("17. Calculation of the monthly budget necessary for riding centers to pay all employees");
         System.out.println("18. Display of all horses according to a certain category");
         System.out.println("19. Display of all horses according to a certain colour");
+        System.out.println("20. Show the contact details of an employee or client");
+        System.out.println("21. Show the age of an employee or client");
         System.out.println();
     }
 
@@ -53,9 +55,9 @@ public class Service {
         ridingCenters.add(new RidingCenter("BeFree", locations.get(1), 5, 8, "8:00", "16:00"));
         ridingCenters.add(new RidingCenter("Horseland", locations.get(2), 8, 12, "8:00", "18:00"));
 
-        addClient(new Client("Popescu", "Dan", "0786555456", "dan.ppsc@gmail.com"));
-        addClient(new Client("Ionescu", "Maria", "0755436711", "maria.ionescu@yahoo.com"));
-        addClient(new Client("Pirvu", "Carina", "0765112009", "carina.prv@gmail.com"));
+        addClient(new Client("Popescu", "Dan", "12.09.1988", "0786555456", "dan.ppsc@gmail.com"));
+        addClient(new Client("Ionescu", "Maria", "12.10.1990", "0755436711", "maria.ionescu@yahoo.com"));
+        addClient(new Client("Pirvu", "Carina", "10.12.2002", "0765112009", "carina.prv@gmail.com"));
 
         addHorseToRidingCenter(new Horse("Luna", "Lipitan", "F", "alb", Category.DRESSAGE, "24.04.2015", 5), ridingCenters.get(0).getId());
         addHorseToRidingCenter(new Horse("Nero", "Frizian", "M" , "negru", Category.DRESSAGE, "03.03.2019", 4), ridingCenters.get(0).getId());
@@ -514,5 +516,56 @@ public class Service {
             }
         }
         System.out.println();
+    }
+
+    public void showClientContactDetails(Client client) {
+        System.out.println("\n" + client.getLastName() + " " + client.getFirstName() + " can be contacted at: ");
+        client.contactDetails();
+    }
+
+    public Employee getEmployeeByName(String first, String last, int ridingCenterId) throws NoSuchElementException{
+        RidingCenter ridingCenter = getRidingCenterById(ridingCenterId);
+        List<Employee> foundEmployee = new ArrayList<>();
+        for (Employee emp : ridingCenter.getEmployees()){
+            if (emp.getFirstName().equals(first) && emp.getLastName().equals(last))
+                foundEmployee.add(emp);
+        }
+        if (foundEmployee.size() == 0)
+            throw new NoSuchElementException();
+        if (foundEmployee.size() == 1){
+            return foundEmployee.get(0);
+        }
+        else {
+            System.out.println("More employees with this name!");
+            Integer i = 1;
+            for (Employee employee : foundEmployee)
+                System.out.println(i + ". " + employee.getFirstName() + " " + employee.getLastName() + " " + employee.getEmail() + " - ID: " + employee.getId());
+            System.out.println("Please enter the ID!");
+            return null;
+        }
+    }
+
+    public Employee getEmployeeById(int id, int ridingCenterID) {
+        Employee employeeFound = null;
+        RidingCenter ridingCenter = getRidingCenterById(ridingCenterID);
+        for (Employee emp : ridingCenter.getEmployees()){
+            if (emp.getId() == id)
+                employeeFound = emp;
+        }
+        return employeeFound;
+    }
+
+    public void showEmployeeContactDetails(Employee employee) {
+        System.out.println("\n" + employee.getLastName() + " " + employee.getFirstName() + " can be contacted at: ");
+        employee.contactDetails();
+        System.out.println();
+    }
+
+    public void showAgeClient(Client client) {
+        client.getAge();
+    }
+
+    public void showAgeEmployee(Employee employee) {
+        employee.getAge();
     }
 }

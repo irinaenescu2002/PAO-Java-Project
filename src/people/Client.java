@@ -1,5 +1,8 @@
 package people;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Client implements Person {
@@ -7,15 +10,25 @@ public class Client implements Person {
     private int id;
     private String firstName;
     private String lastName;
+    private String birthDate;
     private String phone;
     private String email;
 
-    public Client(String lastName, String firstName, String phone, String email) {
+    public Client(String lastName, String firstName, String birthDate, String phone, String email) {
         this.id = ++idCounter;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+        this.birthDate = birthDate;
         this.email = email;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
     public int getId() {
@@ -62,6 +75,16 @@ public class Client implements Person {
     public void contactDetails() {
         System.out.println("Phone: " + this.phone);
         System.out.println("Email: " + this.email);
+    }
+
+    @Override
+    public void getAge(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate birthDate = LocalDate.parse(getBirthDate(), formatter);
+        LocalDate currentDate = LocalDate.now();
+        Period period = Period.between(birthDate, currentDate);
+        System.out.println();
+        System.out.println(lastName + " " + firstName + " - " + period.getYears() + " years");
     }
 
     @Override
