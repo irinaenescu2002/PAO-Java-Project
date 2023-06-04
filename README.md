@@ -30,6 +30,8 @@ Vom avea mai multe centre de echitatie, fiecare situat intr-o locatie bine stabi
 12. Afisarea tuturor cailor de o anumita culoare
 13. Calcularea bugetului lunar necesar centrelor de echitatie pentru a plati toti angajatii 
 14. Afisarea tuturor cailor in functie de o anumita categorie 
+15. Afisarea datelor de contact (angajati si clienti)
+16. Afisarea varstei (clienti si angajati), respectiv a vechimii (angajati)
 
 ## Implementarea sistemului 
 ✅ Clase simple cu atribute private / protected si metode de acces
