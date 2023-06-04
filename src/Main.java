@@ -309,7 +309,9 @@ public class Main {
                         String start = scanner.next();
                         System.out.println("End Hour: ");
                         String end = scanner.next();
-                        service.addAppointment(new Appointment(ridingCenter, trainer, client, horse, date, start, end));
+                        System.out.println("Price: ");
+                        String price = scanner.next();
+                        service.addAppointment(new Appointment(ridingCenter, trainer, client, horse, date, start, end, Integer.parseInt(price)));
                         System.out.println("\nAppointment added successfully!\n");
                     } catch (NoSuchElementException ex){
                         System.out.println("\nNo horse, trainer or client with that name at that riding center!\n");
@@ -413,7 +415,43 @@ public class Main {
                             }
                         }
                     }
-
+                }
+                case "14" -> {
+                    System.out.println("Our loyal clients are: ");
+                    service.loyalClients();
+                }
+                case "15" -> {
+                    System.out.println("Our most active employees are: ");
+                    service.activeEmployees();
+                }
+                case "16" -> {
+                    System.out.print("The total amount collected on appointments: ");
+                    System.out.println(service.totalAmount() + " RON");
+                    System.out.println();
+                }
+                case "17" -> {
+                    System.out.print("The monthly budget necessary for riding centers to pay all employees: ");
+                    System.out.println(service.monthlyBudget() + " RON");
+                    System.out.println();
+                }
+                case "18" -> {
+                    System.out.println("Please enter the number of the category!\n 1.DRESSAGE \n 2.SHOWJUMPING \n 3.RIDING");
+                    System.out.println("Category: ");
+                    String categoryId = scanner.next();
+                    Category category = null;
+                    switch (categoryId){
+                        case "1" -> category = Category.DRESSAGE;
+                        case "2" -> category = Category.SHOWJUMPING;
+                        case "3" -> category = Category.RIDING;
+                    }
+                    System.out.println("\nThese are our horses from all riding centers trained for " + category + ": ");
+                    service.getHorsesByCategory(category);
+                }
+                case "19" -> {
+                    System.out.println("Color: ");
+                    String color = scanner.next();
+                    System.out.println("\n These are our " + color + " horses: ");
+                    service.getHorsesByColor(color);
                 }
             }
         } while (!command.equals("0"));

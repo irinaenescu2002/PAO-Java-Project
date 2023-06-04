@@ -34,11 +34,12 @@ public class Service {
         System.out.println("11. Show all appointments");
         System.out.println("12. Changing a client's contact details");
         System.out.println("13. Show the appointments of an employee, a horse or a client");
-        System.out.println("14. Display of loyal customers");
+        System.out.println("14. Display of loyal clients");
         System.out.println("15. Displaying the most active employees");
         System.out.println("16. Calculation of the total amount collected on appointments");
         System.out.println("17. Calculation of the monthly budget necessary for riding centers to pay all employees");
         System.out.println("18. Display of all horses according to a certain category");
+        System.out.println("19. Display of all horses according to a certain colour");
         System.out.println();
     }
 
@@ -82,6 +83,14 @@ public class Service {
         addArenaToRidingCenter(new Arena(2, 90), ridingCenters.get(3).getId());
         addArenaToRidingCenter(new Arena(3, 45), ridingCenters.get(2).getId());
         addArenaToRidingCenter(new Arena(3, 50), ridingCenters.get(3).getId());
+
+        addAppointment(new Appointment(getRidingCenterById(1), getTrainerByName("Ioana", "Duma", 1), getClientByName("Dan", "Popescu"), getHorseByName("Luna", 1), "23.10.2022", "12:00", "15:00", 300));
+        addAppointment(new Appointment(getRidingCenterById(1), getTrainerByName("Mirela", "Popescu", 1), getClientByName("Dan", "Popescu"), getHorseByName("Dakota", 1), "27.10.2022", "13:00", "15:00", 200));
+        addAppointment(new Appointment(getRidingCenterById(2), getTrainerByName("Mircea", "Caragea", 2), getClientByName("Carina", "Pirvu"), getHorseByName("Fred", 2), "28.11.2022", "12:00", "15:00", 300));
+        addAppointment(new Appointment(getRidingCenterById(2), getTrainerByName("Mircea", "Caragea", 2), getClientByName("Carina", "Pirvu"), getHorseByName("Iris", 2), "29.11.2022", "15:00", "18:00", 300));
+        addAppointment(new Appointment(getRidingCenterById(3), getTrainerByName("Crina", "Aldea", 3), getClientByName("Carina", "Pirvu"), getHorseByName("Bob", 3), "01.12.2022", "12:00", "14:00", 200));
+        addAppointment(new Appointment(getRidingCenterById(3), getTrainerByName("Crina", "Aldea", 3), getClientByName("Maria", "Ionescu"), getHorseByName("Bob", 3), "25.10.2022", "12:00", "14:00", 200));
+
     }
 
     public void addLocation(Location _location){
@@ -352,6 +361,157 @@ public class Service {
         }
         if (i == 1){
             System.out.println("\nNo appointments for this trainer!");
+        }
+        System.out.println();
+    }
+
+    public void loyalClients() {
+        HashMap <Integer, List<Client>> appointmentsClients = new HashMap<>();
+        for (Map.Entry<Client, List<Appointment>> entry : appointments.entrySet()){
+            Client client = entry.getKey();
+            List<Appointment> appointmentsList = entry.getValue();
+            int numberOfAppoimtments = appointmentsList.size();
+            if (!appointmentsClients.containsKey(numberOfAppoimtments)){
+                List<Client> myCLients = new ArrayList<>();
+                myCLients.add(client);
+                appointmentsClients.put(numberOfAppoimtments, myCLients);
+            }
+            else{
+                List<Client> myClients = appointmentsClients.get(numberOfAppoimtments);
+                clients.add(client);
+                appointmentsClients.put(numberOfAppoimtments, myClients);
+            }
+        }
+
+        int max = -1;
+        for(Map.Entry<Integer, List<Client>> entry : appointmentsClients.entrySet()){
+            if (entry.getKey() > max){
+                max = entry.getKey();
+            }
+        }
+
+        int i = 1;
+        for (Client client : appointmentsClients.get(max)){
+            System.out.println(i + ". " + client.getLastName() + " " + client.getFirstName() + " (" + client.getEmail() + ") - " + max + " appointmnets");
+            i ++;
+        }
+        System.out.println();
+    }
+
+    public void activeEmployees() {
+        HashMap <Employee, Integer> activeEmpoyees = new HashMap<>();
+        for (RidingCenter ridingCenter : ridingCenters){
+            for (Employee employee : ridingCenter.getEmployees()){
+                if (employee instanceof Trainer) {
+                    activeEmpoyees.put(employee, 0);
+                }
+            }
+        }
+        for (Map.Entry<Client, List<Appointment>> entry : appointments.entrySet()) {
+            Client client = entry.getKey();
+            List<Appointment> appointmentsList = entry.getValue();
+            for (Appointment appointment : appointmentsList){
+                Employee trainer = appointment.getTrainer();
+                int countAppointments = activeEmpoyees.get(trainer);
+                countAppointments += 1;
+                activeEmpoyees.put(trainer, countAppointments);
+            }
+        }
+
+        HashMap <Integer, List<Employee>> finalActiveEmployees = new HashMap<>();
+        for (Map.Entry <Employee, Integer> entry : activeEmpoyees.entrySet()){
+            Employee employee = entry.getKey();
+            Integer value = entry.getValue();
+            if (!finalActiveEmployees.containsKey(value)){
+                List <Employee> employeeList = new ArrayList<>();
+                employeeList.add(employee);
+                finalActiveEmployees.put(value, employeeList);
+            }
+            else {
+                List <Employee> employeeList = finalActiveEmployees.get(value);
+                employeeList.add(employee);
+                finalActiveEmployees.put(value, employeeList);
+            }
+        }
+
+        int max = -1;
+        for(Map.Entry<Integer, List<Employee>> entry : finalActiveEmployees.entrySet()){
+            if (entry.getKey() > max){
+                max = entry.getKey();
+            }
+        }
+
+        int i = 1;
+        for (Employee employee : finalActiveEmployees.get(max)){
+            System.out.println(i + ". " + employee.getLastName() + " " + employee.getFirstName() + " (" + employee.getEmail() + ") - " + max + " appointmnets");
+            i ++;
+        }
+        System.out.println();
+    }
+
+    public int totalAmount() {
+        int amount = 0;
+        for (Map.Entry<Client, List<Appointment>> entry : appointments.entrySet()) {
+            Client client = entry.getKey();
+            List<Appointment> appointmentsList = entry.getValue();
+            for (Appointment appointment : appointmentsList) {
+                amount += appointment.getPrice();
+            }
+        }
+        return amount;
+    }
+
+    public int monthlyBudget() {
+        int bugdet = 0;
+        for (RidingCenter ridingCenter : ridingCenters){
+            for (Employee employee : ridingCenter.getEmployees()){
+                bugdet += employee.getSalary();
+            }
+        }
+        return bugdet;
+    }
+
+    public void getHorsesByCategory(Category category) {
+        List <Horse> horses = new ArrayList<>();
+        for (RidingCenter ridingCenter : ridingCenters){
+            for (Horse horse : ridingCenter.getHorses()){
+                if (horse.getCategory() == category){
+                    horses.add(horse);
+                }
+            }
+        }
+        if (horses.size() == 0) {
+            System.out.println("No horses for that category!");
+        }
+        else {
+            int i = 1;
+            for (Horse horse : horses){
+                System.out.println(i + ". " + horse.getName() + " (" + horse.getBreed() + ", " + horse.getBirthDate() + ")");
+                i ++ ;
+            }
+        }
+        System.out.println(category.getDescription());
+        System.out.println();
+    }
+
+    public void getHorsesByColor(String color) {
+        List <Horse> horses = new ArrayList<>();
+        for (RidingCenter ridingCenter : ridingCenters){
+            for (Horse horse : ridingCenter.getHorses()){
+                if (horse.getColor().equals(color) || horse.getColor().contains(color)){
+                    horses.add(horse);
+                }
+            }
+        }
+        if (horses.size() == 0) {
+            System.out.println("No horses with that color!");
+        }
+        else {
+            int i = 1;
+            for (Horse horse : horses){
+                System.out.println(i + ". " + horse.getName() + " (" + horse.getBreed() + ", " + horse.getBirthDate() + ") - " + horse.getColor());
+                i ++ ;
+            }
         }
         System.out.println();
     }

@@ -13,11 +13,11 @@ public class Appointment {
     private Client client;
     private Horse horse;
     private String date;
-
     private String startHour;
     private String endHour;
+    private int price;
 
-    public Appointment(RidingCenter ridingCenter, Employee trainer, Client client, Horse horse, String date, String startHour, String endHour) {
+    public Appointment(RidingCenter ridingCenter, Employee trainer, Client client, Horse horse, String date, String startHour, String endHour, int price) {
         this.ridingCenter = ridingCenter;
         this.trainer = trainer;
         this.client = client;
@@ -25,6 +25,15 @@ public class Appointment {
         this.date = date;
         this.startHour = startHour;
         this.endHour = endHour;
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public RidingCenter getRidingCenter() {
