@@ -55,4 +55,4 @@ Vom avea mai multe centre de echitatie, fiecare situat intr-o locatie bine stabi
 
 ✅ Definirea si tratarea exceptiilor
 1. Tratarea exceptiilor standard (FileNotFoundException, NoSuchElementException etc.)
-2. Definirea unor exceptii noi (plasarea unui cal intr-un grajd ce nu exista, plasarea unui cal intr-un grajd ocupat) 
+2. Definirea unor exceptii noi (plasarea unui cal intr-un grajd ce nu exista, plasarea unui cal intr-un grajd ocupat, email sau numar de telefon introdus gresit) 
