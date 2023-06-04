@@ -27,7 +27,7 @@ Vom avea mai multe centre de echitatie, fiecare situat intr-o locatie bine stabi
 9. Afisarea clientilor fideli
 10. Afisarea celor mai activi angajati 
 11. Calcularea sumei totale incasate pe programari 
-12. Anularea unei programari 
+12. Afisarea tuturor cailor de o anumita culoare
 13. Calcularea bugetului lunar necesar centrelor de echitatie pentru a plati toti angajatii 
 14. Afisarea tuturor cailor in functie de o anumita categorie 
 
