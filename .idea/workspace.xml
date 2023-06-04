@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="87fdbe5e-7f01-4c8e-b49a-6344171dec7b" name="Changes" comment="Added Classes + 4 Commands">
+      <change afterPath="$PROJECT_DIR$/src/exceptions/InvalidContactDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/exceptions/InvalidStable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/people/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/people/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/people/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/people/Employee.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/people/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/people/Person.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +64,7 @@
       <workItem from="1684097947235" duration="5386000" />
       <workItem from="1684142482060" duration="5019000" />
       <workItem from="1684162933298" duration="4675000" />
-      <workItem from="1685710417383" duration="33994000" />
+      <workItem from="1685710417383" duration="36375000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1681819141772</created>

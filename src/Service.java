@@ -1,4 +1,6 @@
 import appointments.Appointment;
+import exceptions.InvalidContactDetails;
+import exceptions.InvalidStable;
 import horses.Category;
 import horses.Horse;
 import people.Caretaker;
@@ -567,5 +569,26 @@ public class Service {
 
     public void showAgeEmployee(Employee employee) {
         employee.getAge();
+    }
+
+    public void checkFreeStable(int stable, RidingCenter ridingCenter) throws InvalidStable{
+        for (Horse horse : ridingCenter.getHorses()){
+            if (horse.getStable() == stable){
+               throw new InvalidStable("\nThis stable is occupied by " + horse.getName() + "!\n");
+            }
+        }
+    }
+
+    public void checkExistentStable(int stable, RidingCenter ridingCenter) throws InvalidStable {
+        if (stable > ridingCenter.getStableNumber()){
+            throw new InvalidStable("\nThis riding center has only " + ridingCenter.getStableNumber() + " stables! \n");
+        }
+    }
+
+    public void checkContactDetails(String phone, String email) throws InvalidContactDetails {
+        if (phone.length() != 10)
+            throw new InvalidContactDetails("\nInvalid phone number!\n");
+        if (!email.contains("@") || (!email.contains(".com") && !email.contains(".ro")))
+            throw new InvalidContactDetails("\nInvalid email!\n");
     }
 }

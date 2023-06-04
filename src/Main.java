@@ -1,4 +1,6 @@
 import appointments.Appointment;
+import exceptions.InvalidContactDetails;
+import exceptions.InvalidStable;
 import horses.Category;
 import horses.Horse;
 import people.Caretaker;
@@ -140,8 +142,14 @@ public class Main {
                     System.out.println("Email: ");
                     String email = scanner.next();
 
-                    service.addClient(new Client(lastName, firstName, birthDate, phone, email));
-                    System.out.println("Client added successfully!");
+                    try {
+                        service.checkContactDetails(phone, email);
+                        service.addClient(new Client(lastName, firstName, birthDate, phone, email));
+                        System.out.println("\nClient added successfully!");
+                    } catch (InvalidContactDetails ex){
+                        System.out.println(ex.getMessage());
+                        System.out.println();
+                    }
                     System.out.println();
                 }
                 case "6" -> {
@@ -153,32 +161,39 @@ public class Main {
                         System.out.println("There is no riding center with this ID!\n");
                     }
                     else {
-                        System.out.println("Please enter details about the new horse!");
-                        System.out.println("Name: ");
-                        String name = scanner.next();
-                        System.out.println("Breed: ");
-                        String breed = scanner.next();
-                        System.out.println("Sex: ");
-                        String sex = scanner.next();
-                        System.out.println("Color: ");
-                        String color = scanner.next();
-                        System.out.println("Stable: ");
-                        String stable = scanner.next();
-                        System.out.println("BirthDate: ");
-                        String birthDate = scanner.next();
-                        System.out.println("Please enter the number of the category!\n 1.DRESSAGE \n 2.SHOWJUMPING \n 3.RIDING");
-                        System.out.println("Category: ");
-                        String categoryId = scanner.next();
-                        Category category = null;
-                        switch (categoryId){
-                            case "1" -> category = Category.DRESSAGE;
-                            case "2" -> category = Category.SHOWJUMPING;
-                            case "3" -> category = Category.RIDING;
-                        }
+                        try {
+                            System.out.println("Please enter details about the new horse!");
+                            System.out.println("Name: ");
+                            String name = scanner.next();
+                            System.out.println("Breed: ");
+                            String breed = scanner.next();
+                            System.out.println("Sex: ");
+                            String sex = scanner.next();
+                            System.out.println("Color: ");
+                            String color = scanner.next();
+                            System.out.println("Stable: ");
+                            String stable = scanner.next();
+                            service.checkExistentStable(Integer.parseInt(stable), ridingCenter);
+                            service.checkFreeStable(Integer.parseInt(stable), ridingCenter);
+                            System.out.println("BirthDate: ");
+                            String birthDate = scanner.next();
+                            System.out.println("Please enter the number of the category!\n 1.DRESSAGE \n 2.SHOWJUMPING \n 3.RIDING");
+                            System.out.println("Category: ");
+                            String categoryId = scanner.next();
+                            Category category = null;
+                            switch (categoryId) {
+                                case "1" -> category = Category.DRESSAGE;
+                                case "2" -> category = Category.SHOWJUMPING;
+                                case "3" -> category = Category.RIDING;
+                            }
 
-                        service.addHorseToRidingCenter(new Horse(name, breed, sex, color, category, birthDate, Integer.parseInt(stable)), Integer.parseInt(ridingCenterId));
-                        System.out.println("\nHorse added successfully!");
-                        System.out.println();
+                            service.addHorseToRidingCenter(new Horse(name, breed, sex, color, category, birthDate, Integer.parseInt(stable)), Integer.parseInt(ridingCenterId));
+                            System.out.println("\nHorse added successfully!");
+                            System.out.println();
+                        } catch (InvalidStable ex){
+                            System.out.println(ex.getMessage());
+                            System.out.println();
+                        }
                     }
                 }
                 case "7" -> {
@@ -190,59 +205,64 @@ public class Main {
                         System.out.println("There is no riding center with this ID!\n");
                     }
                     else {
-                        System.out.println("Please enter details about the new employee!");
-                        System.out.println("Last Name: ");
-                        String lastName = scanner.next();
-                        System.out.println("First Name: ");
-                        String firstName = scanner.next();
-                        System.out.println("BirthDate: ");
-                        String birthDate = scanner.next();
-                        System.out.println("Phone: ");
-                        String phone = scanner.next();
-                        System.out.println("Email: ");
-                        String email = scanner.next();
-                        System.out.println("Hire Date: ");
-                        String hireDate = scanner.next();
-                        System.out.println("Salary: ");
-                        String salary = scanner.next();
-                        System.out.println("Office Number: ");
-                        String officeNumber = scanner.next();
-                        System.out.println("Work Days: ");
-                        String workDays = scanner.next();
-                        System.out.println("Please enter the number of the employee type!\n 1.TRAINER\n 2.CARETAKER");
-                        System.out.println("Employee Type: ");
-                        String type = scanner.next();
-                        switch (type){
-                            case "1" -> {
-                                System.out.println("Skills: ");
-                                String skills = scanner.next();
-                                System.out.println("Qualification: ");
-                                String qualification = scanner.next();
+                        try {
+                            System.out.println("Please enter details about the new employee!");
+                            System.out.println("Last Name: ");
+                            String lastName = scanner.next();
+                            System.out.println("First Name: ");
+                            String firstName = scanner.next();
+                            System.out.println("BirthDate: ");
+                            String birthDate = scanner.next();
+                            System.out.println("Phone: ");
+                            String phone = scanner.next();
+                            System.out.println("Email: ");
+                            String email = scanner.next();
+                            service.checkContactDetails(phone, email);
+                            System.out.println("Hire Date: ");
+                            String hireDate = scanner.next();
+                            System.out.println("Salary: ");
+                            String salary = scanner.next();
+                            System.out.println("Office Number: ");
+                            String officeNumber = scanner.next();
+                            System.out.println("Work Days: ");
+                            String workDays = scanner.next();
+                            System.out.println("Please enter the number of the employee type!\n 1.TRAINER\n 2.CARETAKER");
+                            System.out.println("Employee Type: ");
+                            String type = scanner.next();
+                            switch (type){
+                                case "1" -> {
+                                    System.out.println("Skills: ");
+                                    String skills = scanner.next();
+                                    System.out.println("Qualification: ");
+                                    String qualification = scanner.next();
 
-                                Trainer newEmployee = new Trainer(firstName, lastName, birthDate, phone,
-                                        email, hireDate, Integer.parseInt(salary), Integer.parseInt(officeNumber)
-                                        , Arrays.stream(workDays.split(",")).toList(), Arrays.stream(skills.split(",")).toList(), qualification);
+                                    Trainer newEmployee = new Trainer(firstName, lastName, birthDate, phone,
+                                            email, hireDate, Integer.parseInt(salary), Integer.parseInt(officeNumber)
+                                            , Arrays.stream(workDays.split(",")).toList(), Arrays.stream(skills.split(",")).toList(), qualification);
 
-                                service.addEmployeeToRidingCenter(newEmployee, Integer.parseInt(ridingCenterId));
-                            }
-                            case "2" -> {
-                                System.out.println("Stables: ");
-                                String stables = scanner.next();
-                                String [] splitStables = stables.split(",");
-                                System.out.println(Arrays.toString(splitStables));
-                                List<Integer> goodStables = new ArrayList<>();
-                                for (String stable : splitStables){
-                                    goodStables.add(Integer.parseInt(stable));
+                                    service.addEmployeeToRidingCenter(newEmployee, Integer.parseInt(ridingCenterId));
                                 }
-                                System.out.println(goodStables);
+                                case "2" -> {
+                                    System.out.println("Stables: ");
+                                    String stables = scanner.next();
+                                    String[] splitStables = stables.split(",");
+                                    System.out.println(Arrays.toString(splitStables));
+                                    List<Integer> goodStables = new ArrayList<>();
+                                    for (String stable : splitStables) {
+                                        goodStables.add(Integer.parseInt(stable));
+                                    }
+                                    System.out.println(goodStables);
 
-                                Caretaker newEmployee = new Caretaker(firstName, lastName, birthDate, phone,
-                                        email, hireDate, Integer.parseInt(salary), Integer.parseInt(officeNumber)
-                                        , Arrays.stream(workDays.split(",")).toList(), goodStables);
+                                    Caretaker newEmployee = new Caretaker(firstName, lastName, birthDate, phone,
+                                            email, hireDate, Integer.parseInt(salary), Integer.parseInt(officeNumber)
+                                            , Arrays.stream(workDays.split(",")).toList(), goodStables);
 
-                                service.addEmployeeToRidingCenter(newEmployee, Integer.parseInt(ridingCenterId));
-
+                                    service.addEmployeeToRidingCenter(newEmployee, Integer.parseInt(ridingCenterId));
+                                }
                             }
+                        } catch (InvalidContactDetails ex){
+                            System.out.println(ex.getMessage());
+                            System.out.println();
                         }
 
                         System.out.println("\nEmployee added successfully!\n");
