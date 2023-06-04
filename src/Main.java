@@ -16,7 +16,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
-        Service service = new Service();
+        Service service = Service.getInstance();
         Scanner scanner = new Scanner(System.in);
         service.addRecords();
         String command;

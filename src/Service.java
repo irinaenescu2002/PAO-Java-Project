@@ -10,15 +10,47 @@ import people.Trainer;
 import ridingCenters.Arena;
 import ridingCenters.Location;
 import ridingCenters.RidingCenter;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Service {
-
+    private static Service instance = null;
     private List<RidingCenter> ridingCenters = new ArrayList<>();
     private List<Location> locations = new ArrayList<>();
     private List<Client> clients = new ArrayList<>();
     private HashMap<Client, List<Appointment>> appointments = new HashMap<>();
+
+    File audit = new File("audit.csv");
+    PrintWriter writer = null;
+
+    private Service(){
+        try {
+            writer = new PrintWriter(audit);
+            writer.println("Timestap" + ", " + "Action");
+            writer.flush();
+        } catch (IOException ex){
+            System.out.println("Can't create the audit file!");
+        }
+    }
+
+    public static synchronized Service getInstance() {
+        if (instance == null)
+            instance = new Service();
+        return instance;
+    }
+
+    private void makeAudit(String action){
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        writer.print(timestamp + ", ");
+        writer.println(action);
+        writer.flush();
+    }
 
     public void printMenu(){
         System.out.println("MENU");
@@ -48,14 +80,14 @@ public class Service {
     }
 
     public void addRecords(){
-        locations.add(new Location("Romania", "Bucuresti", "Panselutelor", "34", "1879098"));
-        locations.add(new Location("Romania", "Brasov", "Cositorilor", "32A", "4324564"));
-        locations.add(new Location("Romania", "Brasov", "Negru Voda", "23B", "4378890"));
+        addLocation(new Location("Romania", "Bucuresti", "Panselutelor", "34", "1879098"));
+        addLocation(new Location("Romania", "Brasov", "Cositorilor", "32A", "4324564"));
+        addLocation(new Location("Romania", "Brasov", "Negru Voda", "23B", "4378890"));
 
-        ridingCenters.add(new RidingCenter("Spirit", locations.get(0), 4, 5, "10:00", "18:00"));
-        ridingCenters.add(new RidingCenter("FreeRide", locations.get(0), 6, 9, "12:00", "20:00"));
-        ridingCenters.add(new RidingCenter("BeFree", locations.get(1), 5, 8, "8:00", "16:00"));
-        ridingCenters.add(new RidingCenter("Horseland", locations.get(2), 8, 12, "8:00", "18:00"));
+        addRidingCenter(new RidingCenter("Spirit", locations.get(0), 4, 5, "10:00", "18:00"));
+        addRidingCenter(new RidingCenter("FreeRide", locations.get(0), 6, 9, "12:00", "20:00"));
+        addRidingCenter(new RidingCenter("BeFree", locations.get(1), 5, 8, "8:00", "16:00"));
+        addRidingCenter(new RidingCenter("Horseland", locations.get(2), 8, 12, "8:00", "18:00"));
 
         addClient(new Client("Popescu", "Dan", "12.09.1988", "0786555456", "dan.ppsc@gmail.com"));
         addClient(new Client("Ionescu", "Maria", "12.10.1990", "0755436711", "maria.ionescu@yahoo.com"));
@@ -98,8 +130,9 @@ public class Service {
     }
 
     public void addLocation(Location _location){
-
         locations.add(_location);
+        String action = "Added a new location in " + _location.getCountry() + " - " + _location.getCity();
+        makeAudit(action);
     }
 
     public void showLocation(){
@@ -108,6 +141,8 @@ public class Service {
             i = i + 1;
             System.out.println(i + ". " + location);
         }
+        String action = "Show all locations";
+        makeAudit(action);
     }
 
     public Boolean checkLocation(Location _location){
@@ -121,6 +156,8 @@ public class Service {
     public void addRidingCenter(RidingCenter _ridingCenter){
 
         ridingCenters.add(_ridingCenter);
+        String action = "Added a new riding center called " + _ridingCenter.getName();
+        makeAudit(action);
     }
 
     public void showRidingCenters(){
@@ -130,6 +167,8 @@ public class Service {
             System.out.println(i + ". " + ridingCenter);
             System.out.println();
         }
+        String action = "Show all riding centers";
+        makeAudit(action);
     }
 
     public RidingCenter getRidingCenterById(int myId){
@@ -146,6 +185,8 @@ public class Service {
         horses.add(_horse);
         horses = horses.stream().sorted(Comparator.comparing(Horse::getName)).collect(Collectors.toList());
         ridingCenter.setHorses(horses);
+        String action = "Added a new horse (" + _horse.getName() +  ") in " + ridingCenter.getName() + " Riding Center " ;
+        makeAudit(action);
     }
 
     public void addArenaToRidingCenter(Arena _arena, int ridingCenterId){
@@ -153,12 +194,16 @@ public class Service {
         HashSet <Arena> arenas = ridingCenter.getArenas();
         arenas.add(_arena);
         ridingCenter.setArenas(arenas);
+        String action = "Added a new arena in " + ridingCenter.getName() + " Riding Center";
+        makeAudit(action);
     }
 
     public void addClient(Client client) {
         clients.add(client);
         clients = clients.stream().sorted(Comparator.comparing(Client::getLastName).thenComparing(Client::getFirstName)).collect(Collectors.toList());
         appointments.put(client, new ArrayList<>());
+        String action = "Added a new client (" + client.getFirstName() + " " + client.getLastName() + ")";
+        makeAudit(action);
     }
 
     public void showClients() {
@@ -167,6 +212,8 @@ public class Service {
             i = i + 1;
             System.out.println(i + ". " + client);
         }
+        String action = "Show all clients";
+        makeAudit(action);
     }
 
     public void addEmployeeToRidingCenter(Employee newEmployee, int ridingCenterId) {
@@ -175,6 +222,8 @@ public class Service {
         employees.add(newEmployee);
         employees = employees.stream().sorted(Comparator.comparing(Employee::getLastName).thenComparing(Employee::getFirstName)).collect(Collectors.toList());
         ridingCenter.setEmployees(employees);
+        String action = "Added a new employee (" + newEmployee.getFirstName() + " " + newEmployee.getLastName() + ") at " + ridingCenter.getName() + " Riding Center";
+        makeAudit(action);
     }
 
     public void showAppointments(){
@@ -195,6 +244,8 @@ public class Service {
                  }
             }
         }
+        String action = "Show all appointments";
+        makeAudit(action);
     }
 
     public Client getClientByName(String first, String last) throws NoSuchElementException{
@@ -256,6 +307,8 @@ public class Service {
         List <Appointment> currentApp = appointments.get(client);
         currentApp.add(appointment);
         appointments.put(client, currentApp);
+        String action = "Added a new appointment for a client (" + client.getFirstName() + " " + client.getLastName() + ") on " + appointment.getDate();
+        makeAudit(action);
     }
 
     public Employee getTrainerByID(int id, int ridingCenterID) {
@@ -310,6 +363,8 @@ public class Service {
                 break;
             }
         }
+        String action = "Changing " + client.getFirstName() + " " + client.getLastName() + " phone number in " + phoneNumber;
+        makeAudit(action);
     }
 
     public void changeEmailClient(Client client, String email) {
@@ -319,6 +374,8 @@ public class Service {
                 break;
             }
         }
+        String action = "Changing " + client.getFirstName() + " " + client.getLastName() + " email in " + email;
+        makeAudit(action);
     }
 
 
@@ -333,6 +390,8 @@ public class Service {
             System.out.println("\nNo appointments for this client!");
         }
         System.out.println();
+        String action = "Show all appointments for  " + client.getFirstName() + " " + client.getLastName();
+        makeAudit(action);
     }
 
     public void getAppointmentsHorse(Horse horse) {
@@ -350,6 +409,8 @@ public class Service {
             System.out.println("\nNo appointments for this horse!");
         }
         System.out.println();
+        String action = "Show all appointments for  " + horse.getName();
+        makeAudit(action);
     }
 
     public void getAppointmentsTrainer(Employee trainer) {
@@ -367,6 +428,8 @@ public class Service {
             System.out.println("\nNo appointments for this trainer!");
         }
         System.out.println();
+        String action = "Show all appointments for  " + trainer.getFirstName() + " " + trainer.getLastName();
+        makeAudit(action);
     }
 
     public void loyalClients() {
@@ -400,6 +463,8 @@ public class Service {
             i ++;
         }
         System.out.println();
+        String action = "Show our loyal clients";
+        makeAudit(action);
     }
 
     public void activeEmployees() {
@@ -451,6 +516,8 @@ public class Service {
             i ++;
         }
         System.out.println();
+        String action = "Show our most active employees";
+        makeAudit(action);
     }
 
     public int totalAmount() {
@@ -462,6 +529,8 @@ public class Service {
                 amount += appointment.getPrice();
             }
         }
+        String action = "Show the total amount collected on appointments";
+        makeAudit(action);
         return amount;
     }
 
@@ -472,6 +541,8 @@ public class Service {
                 bugdet += employee.getSalary();
             }
         }
+        String action = "Show the monthly budget necessary for riding center to pay all employees";
+        makeAudit(action);
         return bugdet;
     }
 
@@ -496,6 +567,8 @@ public class Service {
         }
         System.out.println(category.getDescription());
         System.out.println();
+        String action = "Show our horses trained for " + category;
+        makeAudit(action);
     }
 
     public void getHorsesByColor(String color) {
@@ -518,11 +591,15 @@ public class Service {
             }
         }
         System.out.println();
+        String action = "Show our " + color + " horses";
+        makeAudit(action);
     }
 
     public void showClientContactDetails(Client client) {
         System.out.println("\n" + client.getLastName() + " " + client.getFirstName() + " can be contacted at: ");
         client.contactDetails();
+        String action = "Show " + client.getFirstName() + " " + client.getLastName() + " contact details";
+        makeAudit(action);
     }
 
     public Employee getEmployeeByName(String first, String last, int ridingCenterId) throws NoSuchElementException{
@@ -561,14 +638,20 @@ public class Service {
         System.out.println("\n" + employee.getLastName() + " " + employee.getFirstName() + " can be contacted at: ");
         employee.contactDetails();
         System.out.println();
+        String action = "Show " + employee.getFirstName() + " " + employee.getLastName() + " contact details";
+        makeAudit(action);
     }
 
     public void showAgeClient(Client client) {
         client.getAge();
+        String action = "Show " + client.getFirstName() + " " + client.getLastName() + " age";
+        makeAudit(action);
     }
 
     public void showAgeEmployee(Employee employee) {
         employee.getAge();
+        String action = "Show " + employee.getFirstName() + " " + employee.getLastName() + " age and years spent at our riding centers";
+        makeAudit(action);
     }
 
     public void checkFreeStable(int stable, RidingCenter ridingCenter) throws InvalidStable{
