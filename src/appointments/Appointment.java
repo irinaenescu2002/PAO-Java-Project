@@ -12,14 +12,17 @@ public class Appointment {
     private Employee trainer;
     private Client client;
     private Horse horse;
+    private String date;
+
     private String startHour;
     private String endHour;
 
-    public Appointment(RidingCenter ridingCenter, Employee trainer, Client client, Horse horse, String startHour, String endHour) {
+    public Appointment(RidingCenter ridingCenter, Employee trainer, Client client, Horse horse, String date, String startHour, String endHour) {
         this.ridingCenter = ridingCenter;
         this.trainer = trainer;
         this.client = client;
         this.horse = horse;
+        this.date = date;
         this.startHour = startHour;
         this.endHour = endHour;
     }
@@ -38,6 +41,14 @@ public class Appointment {
 
     public void setTrainer(Employee trainer) {
         this.trainer = trainer;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public Client getClient() {
@@ -76,10 +87,12 @@ public class Appointment {
     public String toString() {
         return "Appointment{" +
                 "RidingCenter: " + ridingCenter.getName() +
-                ", Trainer: " + trainer.getFirstName() + " " + trainer.getLastName() + " (" + trainer.getEmail() + ") " +
+                ", Client: " + client.getFirstName() + " " + client.getLastName() +
+                ", Trainer: " + trainer.getFirstName() + " " + trainer.getLastName() + " (" + trainer.getEmail() + ")" +
                 ", Horse: " + horse.getName() + " (" + horse.getBirthDate() + ") " +
+                ", Date: " + date +
                 ", Start Hour: " + startHour +
-                ", End Hour=" + endHour +
+                ", End Hour: " + endHour +
                 '}';
     }
 }

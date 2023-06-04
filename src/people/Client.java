@@ -1,5 +1,7 @@
 package people;
 
+import java.util.Objects;
+
 public class Client implements Person {
     private static int idCounter = 0;
     private int id;
@@ -68,5 +70,18 @@ public class Client implements Person {
                 ", First Name: " + firstName +
                 ", Phone: " + phone +
                 ", Email: " + email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return id == client.id && Objects.equals(firstName, client.firstName) && Objects.equals(lastName, client.lastName) && Objects.equals(phone, client.phone) && Objects.equals(email, client.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, phone, email);
     }
 }

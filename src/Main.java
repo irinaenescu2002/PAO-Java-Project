@@ -303,11 +303,13 @@ public class Main {
                             String horseId = scanner.next();
                             horse = service.getHorseById(Integer.parseInt(horseId), Integer.parseInt(ridingCenterID));
                         }
+                        System.out.println("Date: ");
+                        String date = scanner.next();
                         System.out.println("Start hour: ");
                         String start = scanner.next();
                         System.out.println("End Hour: ");
                         String end = scanner.next();
-                        service.addAppointment(new Appointment(ridingCenter, trainer, client, horse, start, end));
+                        service.addAppointment(new Appointment(ridingCenter, trainer, client, horse, date, start, end));
                         System.out.println("\nAppointment added successfully!\n");
                     } catch (NoSuchElementException ex){
                         System.out.println("\nNo horse, trainer or client with that name at that riding center!\n");
@@ -317,6 +319,101 @@ public class Main {
                     System.out.println("These are all the appointments of our riding centers!\n");
                     service.showAppointments();
                     System.out.println();
+                }
+                case "12" -> {
+                    try {
+                        System.out.println("Please enter the client name!");
+                        System.out.println("First Name: ");
+                        String clientFirstName = scanner.next();
+                        System.out.println("Last Name: ");
+                        String clientLastName = scanner.next();
+                        Client client = service.getClientByName(clientFirstName, clientLastName);
+                        if (client == null){
+                            String clientID = scanner.next();
+                            client = service.getClientByID(Integer.parseInt(clientID));
+                        }
+                        System.out.println("What do you wanna change? \n 1. Phone number \n 2. Email \n Please enter your option:");
+                        String option = scanner.next();
+                        switch (option){
+                            case "1" -> {
+                                System.out.println("Phone number: ");
+                                String phone = scanner.next();
+                                service.changeNumberPhoneClient(client, phone);
+                                System.out.println("\nPhone number changed successfully!\n");
+                            }
+                            case "2" -> {
+                                System.out.println("Email: ");
+                                String email = scanner.next();
+                                service.changeEmailClient(client, email);
+                                System.out.println("\nEmail changed successfully!\n");
+                            }
+                        }
+                    } catch (NoSuchElementException ex){
+                        System.out.println("\nNo client with that name!\n");
+                    }
+                }
+                case "13" -> {
+                    System.out.println("You wanna see the appointments of a: \n 1. Client \n 2. Horse \n 3. Trainer \n Please enter your option:");
+                    String option = scanner.next();
+                    switch (option){
+                        case "1" -> {
+                            try {
+                                System.out.println("Please enter the client name!");
+                                System.out.println("First Name: ");
+                                String clientFirstName = scanner.next();
+                                System.out.println("Last Name: ");
+                                String clientLastName = scanner.next();
+                                Client client = service.getClientByName(clientFirstName, clientLastName);
+                                if (client == null) {
+                                    String clientID = scanner.next();
+                                    client = service.getClientByID(Integer.parseInt(clientID));
+                                }
+                                System.out.println("\n"  + clientFirstName + " " + clientLastName + "'s appointments:");
+                                service.getAppointmentsClient(client);
+                            } catch (NoSuchElementException ex) {
+                                System.out.println("\nNo client with that name!\n");
+                            }
+                        }
+                        case "2" -> {
+                            try {
+                                System.out.println("Please enter the horse name and the riding center ID!");
+                                System.out.println("Name: ");
+                                String horseName = scanner.next();
+                                System.out.println("Riding Center ID: ");
+                                String ridingCenterID = scanner.next();
+                                Horse horse = service.getHorseByName(horseName, Integer.parseInt(ridingCenterID));
+                                if (horse == null) {
+                                    String horseId = scanner.next();
+                                    horse = service.getHorseById(Integer.parseInt(horseId), Integer.parseInt(ridingCenterID));
+                                }
+                                System.out.println("\n"  + horseName + "'s appointments:");
+                                service.getAppointmentsHorse(horse);
+                            } catch (NoSuchElementException ex) {
+                                System.out.println("\nNo horse with that name at this riding center!\n");
+                            }
+                        }
+                        case "3" -> {
+                            try {
+                                System.out.println("Please enter the employee name and the riding center ID!");
+                                System.out.println("First Name: ");
+                                String trainerFirstName = scanner.next();
+                                System.out.println("Last Name: ");
+                                String trainerLastName = scanner.next();
+                                System.out.println("Riding Center ID: ");
+                                String ridingCenterID = scanner.next();
+                                Employee trainer = service.getTrainerByName(trainerFirstName, trainerLastName, Integer.parseInt(ridingCenterID));
+                                if (trainer == null) {
+                                    String trainerID = scanner.next();
+                                    trainer = service.getTrainerByID(Integer.parseInt(trainerID), Integer.parseInt(ridingCenterID));
+                                }
+                                System.out.println("\n"  + trainerFirstName + " " + trainerLastName + "'s appointments:");
+                                service.getAppointmentsTrainer(trainer);
+                            } catch (NoSuchElementException ex) {
+                                System.out.println("\nNo trainer with that name at this riding center!\n");
+                            }
+                        }
+                    }
+
                 }
             }
         } while (!command.equals("0"));

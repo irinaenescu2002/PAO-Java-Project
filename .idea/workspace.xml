@@ -9,12 +9,6 @@
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/appointments/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/appointments/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/horses/Horse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/horses/Horse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/people/Caretaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/people/Caretaker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/people/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/people/Employee.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/people/Trainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/people/Trainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ridingCenters/Arena.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ridingCenters/Arena.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ridingCenters/RidingCenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ridingCenters/RidingCenter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +63,7 @@
       <workItem from="1684097947235" duration="5386000" />
       <workItem from="1684142482060" duration="5019000" />
       <workItem from="1684162933298" duration="4675000" />
-      <workItem from="1685710417383" duration="20722000" />
+      <workItem from="1685710417383" duration="25110000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1681819141772</created>

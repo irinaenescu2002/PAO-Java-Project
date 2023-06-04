@@ -2,6 +2,7 @@ package people;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Employee implements Person{
     private static int idCounter = 0;
@@ -132,5 +133,18 @@ public class Employee implements Person{
                 ", Office Number: " + officeNumber +
                 ", Work Days: " + workDays +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return id == employee.id && salary == employee.salary && officeNumber == employee.officeNumber && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(birthDate, employee.birthDate) && Objects.equals(phone, employee.phone) && Objects.equals(email, employee.email) && Objects.equals(hireDate, employee.hireDate) && Objects.equals(workDays, employee.workDays);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, birthDate, phone, email, hireDate, salary, officeNumber, workDays);
     }
 }

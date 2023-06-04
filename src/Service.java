@@ -32,6 +32,13 @@ public class Service {
         System.out.println("9. Show details about all clients");
         System.out.println("10. Add a new appointment");
         System.out.println("11. Show all appointments");
+        System.out.println("12. Changing a client's contact details");
+        System.out.println("13. Show the appointments of an employee, a horse or a client");
+        System.out.println("14. Display of loyal customers");
+        System.out.println("15. Displaying the most active employees");
+        System.out.println("16. Calculation of the total amount collected on appointments");
+        System.out.println("17. Calculation of the monthly budget necessary for riding centers to pay all employees");
+        System.out.println("18. Display of all horses according to a certain category");
         System.out.println();
     }
 
@@ -281,5 +288,71 @@ public class Service {
                 horseFound = horse;
         }
         return horseFound;
+    }
+
+    public void changeNumberPhoneClient(Client client, String phoneNumber){
+        for (Client myClient : clients){
+            if (myClient.equals(client)){
+                myClient.setPhone(phoneNumber);
+                break;
+            }
+        }
+    }
+
+    public void changeEmailClient(Client client, String email) {
+        for (Client myClient : clients){
+            if (myClient.equals(client)){
+                myClient.setEmail(email);
+                break;
+            }
+        }
+    }
+
+
+    public void getAppointmentsClient(Client client) {
+        List <Appointment> clientAppointments = appointments.get(client);
+        int j = 1;
+        for (Appointment appointment : clientAppointments) {
+            System.out.println(j + ". " + appointment);
+            j ++;
+        }
+        if (j == 1){
+            System.out.println("\nNo appointments for this client!");
+        }
+        System.out.println();
+    }
+
+    public void getAppointmentsHorse(Horse horse) {
+        int i = 1;
+        for (Map.Entry<Client, List<Appointment>> entry : appointments.entrySet()){
+            List<Appointment> appointmentsList = entry.getValue();
+            for (Appointment app : appointmentsList){
+                if (app.getHorse().equals(horse)){
+                    System.out.println(i + ". " + app);
+                    i ++;
+                }
+            }
+        }
+        if (i == 1){
+            System.out.println("\nNo appointments for this horse!");
+        }
+        System.out.println();
+    }
+
+    public void getAppointmentsTrainer(Employee trainer) {
+        int i = 1;
+        for (Map.Entry<Client, List<Appointment>> entry : appointments.entrySet()){
+            List<Appointment> appointmentsList = entry.getValue();
+            for (Appointment app : appointmentsList){
+                if (app.getTrainer().equals(trainer)){
+                    System.out.println(i + ". " + app);
+                    i ++;
+                }
+            }
+        }
+        if (i == 1){
+            System.out.println("\nNo appointments for this trainer!");
+        }
+        System.out.println();
     }
 }

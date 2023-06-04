@@ -1,5 +1,7 @@
 package horses;
 
+import java.util.Objects;
+
 public class Horse {
 
     private static int idCounter = 0;
@@ -96,5 +98,18 @@ public class Horse {
                 ", Category: " + category +
                 ", BirthDate: " + birthDate +
                 ", Stable: " + stable + "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Horse horse = (Horse) o;
+        return id == horse.id && stable == horse.stable && Objects.equals(name, horse.name) && Objects.equals(breed, horse.breed) && Objects.equals(sex, horse.sex) && Objects.equals(color, horse.color) && category == horse.category && Objects.equals(birthDate, horse.birthDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, breed, sex, color, category, birthDate, stable);
     }
 }
