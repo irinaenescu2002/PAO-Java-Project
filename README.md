@@ -2,12 +2,10 @@
 Proiect pentru Programare Avansata pe Obiecte (anul II) implementat utilizand limbajul de programare Java. Proiectul urmareste dezvoltarea unei aplicatii de gestiune a unui lant de Centre de Echitatie. 
 
 ## Definirea sistemului
-
-Vom avea mai multe centre de echitatie, fiecare situat intr-o locatie bine stabilita. La fiecare centru de echitatie se vor afla mai multi cai (acestia sunt salvati intr-o lista ordonata alfabetic). Fiecare cal este antrenat pentru o categorie (dresaj, sarituri peste obstacole etc). De asemenea, fiecare centru de echitatie va avea proprii angajati (instructor sau ingrijitori). Clientii centrului de echitatie pot merge la orice centru de echitatie pentru o programare. Programarea se face in functie de cal, client si antrenor. 
 <img align="right" src="https://camo.envatousercontent.com/8499761c58ab7fc60c378096ddfafc46c5dbd886/687474703a2f2f64696c65747461636174612e636f6d2f77702d636f6e74656e742f75706c6f6164732f323031372f30312f6f75747075745f556b376a58372e676966"> </img>
+Vom avea mai multe centre de echitatie, fiecare situat intr-o locatie bine stabilita. La fiecare centru de echitatie se vor afla mai multi cai (acestia sunt salvati intr-o lista ordonata alfabetic). Fiecare cal este antrenat pentru o categorie (dresaj, sarituri peste obstacole etc). De asemenea, fiecare centru de echitatie va avea proprii angajati (instructor sau ingrijitori). Clientii centrului de echitatie pot merge la orice centru de echitatie pentru o programare. Programarea se face in functie de cal, client si antrenor. 
 
-
-✅ Obiectele definite in cadrul sistemului sunt urmatoarele:
+✅ Obiectele definite in cadrul sistemului:
 1. Centru de echitatie 
 2. Locatie
 3. Cal
@@ -17,7 +15,7 @@ Vom avea mai multe centre de echitatie, fiecare situat intr-o locatie bine stabi
 7. Manej
 8. Programare 
 
-✅ Interogarile definite in cadrul sistemului 
+✅ Interogarile definite in cadrul sistemului:
 1. Adaugarea unui nou centru de echitatie intr-o anumita locatie
 2. Adaugarea unui client 
 3. Adaugarea unui cal, unui angajat, unei arene intr-un centru de echitatie 
