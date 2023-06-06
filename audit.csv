@@ -1,46 +1,48 @@
 Timestap, Action
-2023-06-04T22:03:32.8998665, Added a new location in Romania - Bucuresti
-2023-06-04T22:03:32.906866, Added a new location in Romania - Brasov
-2023-06-04T22:03:32.906866, Added a new location in Romania - Brasov
-2023-06-04T22:03:32.9078658, Added a new riding center called Spirit
-2023-06-04T22:03:32.9078658, Added a new riding center called FreeRide
-2023-06-04T22:03:32.9078658, Added a new riding center called BeFree
-2023-06-04T22:03:32.9088683, Added a new riding center called Horseland
-2023-06-04T22:03:32.9194565, Added a new client (Dan Popescu)
-2023-06-04T22:03:32.9194565, Added a new client (Maria Ionescu)
-2023-06-04T22:03:32.9204585, Added a new client (Carina Pirvu)
-2023-06-04T22:03:32.9234573, Added a new horse (Luna) in Spirit Riding Center 
-2023-06-04T22:03:32.9234573, Added a new horse (Nero) in Spirit Riding Center 
-2023-06-04T22:03:32.9244617, Added a new horse (Dakota) in Spirit Riding Center 
-2023-06-04T22:03:32.9244617, Added a new horse (Iris) in FreeRide Riding Center 
-2023-06-04T22:03:32.9244617, Added a new horse (Fred) in FreeRide Riding Center 
-2023-06-04T22:03:32.9244617, Added a new horse (Bob) in BeFree Riding Center 
-2023-06-04T22:03:32.9254546, Added a new horse (Marvin) in BeFree Riding Center 
-2023-06-04T22:03:32.9254546, Added a new horse (Marko) in BeFree Riding Center 
-2023-06-04T22:03:32.9356139, Added a new employee (Marian Ionescu) at Spirit Riding Center
-2023-06-04T22:03:32.9366207, Added a new employee (Mirela Popescu) at Spirit Riding Center
-2023-06-04T22:03:32.9366207, Added a new employee (Ioana Duma) at Spirit Riding Center
-2023-06-04T22:03:32.9366207, Added a new employee (Relu Pirvu) at FreeRide Riding Center
-2023-06-04T22:03:32.9366207, Added a new employee (Mircea Caragea) at FreeRide Riding Center
-2023-06-04T22:03:32.9366207, Added a new employee (Laura Mihailescu) at BeFree Riding Center
-2023-06-04T22:03:32.9366207, Added a new employee (Crina Aldea) at BeFree Riding Center
-2023-06-04T22:03:32.9376156, Added a new employee (Ionut Savu) at Horseland Riding Center
-2023-06-04T22:03:32.9407678, Added a new arena in Spirit Riding Center
-2023-06-04T22:03:32.9417693, Added a new arena in Spirit Riding Center
-2023-06-04T22:03:32.9417693, Added a new arena in FreeRide Riding Center
-2023-06-04T22:03:32.9417693, Added a new arena in FreeRide Riding Center
-2023-06-04T22:03:32.9417693, Added a new arena in BeFree Riding Center
-2023-06-04T22:03:32.9417693, Added a new arena in Horseland Riding Center
-2023-06-04T22:03:32.9417693, Added a new arena in BeFree Riding Center
-2023-06-04T22:03:32.9417693, Added a new arena in Horseland Riding Center
-2023-06-04T22:03:32.943771, Added a new appointment for a client (Dan Popescu) on 23.10.2022
-2023-06-04T22:03:32.943771, Added a new appointment for a client (Dan Popescu) on 27.10.2022
-2023-06-04T22:03:32.943771, Added a new appointment for a client (Carina Pirvu) on 28.11.2022
-2023-06-04T22:03:32.943771, Added a new appointment for a client (Carina Pirvu) on 29.11.2022
-2023-06-04T22:03:32.9447695, Added a new appointment for a client (Carina Pirvu) on 01.12.2022
-2023-06-04T22:03:32.9447695, Added a new appointment for a client (Maria Ionescu) on 25.10.2022
-2023-06-04T22:03:54.6988189, Show all locations
-2023-06-04T22:04:02.261028, Show all clients
-2023-06-04T22:04:06.5528095, Show our loyal clients
-2023-06-04T22:04:13.3005481, Show ourmarohorses
-2023-06-04T22:04:35.7431117, Show Ioana Duma age and years spent at our riding centers
+2023-06-06T03:32:30.3031847, Added a new location in Romania - Bucuresti
+2023-06-06T03:32:30.3291826, Added a new location in Romania - Brasov
+2023-06-06T03:32:30.3341842, Added a new location in Romania - Brasov
+2023-06-06T03:32:30.3381846, Added a new location in Romania - Sibiu
+2023-06-06T03:32:30.3441866, Added a new riding center called Spirit
+2023-06-06T03:32:30.3831839, Added a new riding center called FreeRide
+2023-06-06T03:32:30.3891823, Added a new riding center called BeFree
+2023-06-06T03:32:30.3961847, Added a new riding center called Horseland
+2023-06-06T03:32:30.4071856, Added a new client (Dan Popescu)
+2023-06-06T03:32:30.428185, Added a new client (Maria Ionescu)
+2023-06-06T03:32:30.4331843, Added a new client (Carina Pirvu)
+2023-06-06T03:32:30.4401857, Added a new horse (Luna) in Spirit Riding Center 
+2023-06-06T03:32:30.4671869, Added a new horse (Nero) in Spirit Riding Center 
+2023-06-06T03:32:30.4751861, Added a new horse (Dakota) in Spirit Riding Center 
+2023-06-06T03:32:30.4801831, Added a new horse (Iris) in FreeRide Riding Center 
+2023-06-06T03:32:30.4991869, Added a new horse (Fred) in FreeRide Riding Center 
+2023-06-06T03:32:30.5041858, Added a new horse (Bob) in BeFree Riding Center 
+2023-06-06T03:32:30.5091844, Added a new horse (Marvin) in BeFree Riding Center 
+2023-06-06T03:32:30.5141847, Added a new horse (Marko) in BeFree Riding Center 
+2023-06-06T03:32:30.5251859, Added a new employee (Marian Ionescu) at Spirit Riding Center
+2023-06-06T03:32:30.5451835, Added a new employee (Mirela Popescu) at Spirit Riding Center
+2023-06-06T03:32:30.5501864, Added a new employee (Ioana Duma) at Spirit Riding Center
+2023-06-06T03:32:30.5551863, Added a new employee (Relu Pirvu) at FreeRide Riding Center
+2023-06-06T03:32:30.5601831, Added a new employee (Mircea Caragea) at FreeRide Riding Center
+2023-06-06T03:32:30.5651857, Added a new employee (Laura Mihailescu) at BeFree Riding Center
+2023-06-06T03:32:30.571183, Added a new employee (Crina Aldea) at BeFree Riding Center
+2023-06-06T03:32:30.5761842, Added a new employee (Ionut Savu) at Horseland Riding Center
+2023-06-06T03:32:30.5821821, Added a new arena in Spirit Riding Center
+2023-06-06T03:32:30.5831843, Added a new arena in Spirit Riding Center
+2023-06-06T03:32:30.5831843, Added a new arena in FreeRide Riding Center
+2023-06-06T03:32:30.5831843, Added a new arena in FreeRide Riding Center
+2023-06-06T03:32:30.5831843, Added a new arena in BeFree Riding Center
+2023-06-06T03:32:30.5831843, Added a new arena in Horseland Riding Center
+2023-06-06T03:32:30.5831843, Added a new arena in BeFree Riding Center
+2023-06-06T03:32:30.5831843, Added a new arena in Horseland Riding Center
+2023-06-06T03:32:30.5851853, Added a new appointment for a client (Dan Popescu) on 23.10.2022
+2023-06-06T03:32:30.5851853, Added a new appointment for a client (Dan Popescu) on 27.10.2022
+2023-06-06T03:32:30.5851853, Added a new appointment for a client (Carina Pirvu) on 28.11.2022
+2023-06-06T03:32:30.5851853, Added a new appointment for a client (Carina Pirvu) on 29.11.2022
+2023-06-06T03:32:30.5851853, Added a new appointment for a client (Carina Pirvu) on 01.12.2022
+2023-06-06T03:32:30.5861871, Added a new appointment for a client (Maria Ionescu) on 25.10.2022
+2023-06-06T03:32:37.5665648, Show the monthly budget necessary for riding center to pay all employees
+2023-06-06T03:32:55.2553567, Number of stables increased by 10 at Spirit Riding Center
+2023-06-06T03:33:06.5368816, Move Luna from stable 5 to stable 15
+2023-06-06T03:33:12.1950558, Show all clients
+2023-06-06T03:33:22.9224628, Show our loyal clients
+2023-06-06T03:33:47.1765531, Marian Ionescu's salary increased by 23

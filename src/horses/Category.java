@@ -18,4 +18,8 @@ public enum Category {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getName(){
+        return this.name();
+    }
 }

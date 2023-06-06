@@ -14,6 +14,7 @@ import ridingCenters.RidingCenter;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -28,6 +29,8 @@ public class Service {
 
     File audit = new File("audit.csv");
     PrintWriter writer = null;
+    Connection conn = null;
+    Statement statement;
 
     private Service(){
         try {
@@ -36,6 +39,14 @@ public class Service {
             writer.flush();
         } catch (IOException ex){
             System.out.println("Can't create the audit file!");
+        }
+
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/paojavaprojectschema", "root", "oracle");
+            statement = conn.createStatement();
+
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -76,18 +87,25 @@ public class Service {
         System.out.println("19. Display of all horses according to a certain colour");
         System.out.println("20. Show the contact details of an employee or client");
         System.out.println("21. Show the age of an employee or client");
+        System.out.println("22. Delete a client");
+        System.out.println("23. Delete a riding center from a location");
+        System.out.println("24. Increase an employee's salary by x RON");
+        System.out.println("25. Increase the number of stables of a riding center by x");
+        System.out.println("26. Move a horse from one horse to another");
         System.out.println();
     }
 
     public void addRecords(){
+
         addLocation(new Location("Romania", "Bucuresti", "Panselutelor", "34", "1879098"));
         addLocation(new Location("Romania", "Brasov", "Cositorilor", "32A", "4324564"));
         addLocation(new Location("Romania", "Brasov", "Negru Voda", "23B", "4378890"));
+        addLocation(new Location("Romania", "Sibiu", "Crinilor", "20A", "6570098"));
 
         addRidingCenter(new RidingCenter("Spirit", locations.get(0), 4, 5, "10:00", "18:00"));
-        addRidingCenter(new RidingCenter("FreeRide", locations.get(0), 6, 9, "12:00", "20:00"));
-        addRidingCenter(new RidingCenter("BeFree", locations.get(1), 5, 8, "8:00", "16:00"));
-        addRidingCenter(new RidingCenter("Horseland", locations.get(2), 8, 12, "8:00", "18:00"));
+        addRidingCenter(new RidingCenter("FreeRide", locations.get(1), 6, 9, "12:00", "20:00"));
+        addRidingCenter(new RidingCenter("BeFree", locations.get(2), 5, 8, "8:00", "16:00"));
+        addRidingCenter(new RidingCenter("Horseland", locations.get(3), 8, 12, "8:00", "18:00"));
 
         addClient(new Client("Popescu", "Dan", "12.09.1988", "0786555456", "dan.ppsc@gmail.com"));
         addClient(new Client("Ionescu", "Maria", "12.10.1990", "0755436711", "maria.ionescu@yahoo.com"));
@@ -129,10 +147,37 @@ public class Service {
 
     }
 
+    public void deleteRecords(){
+        String queryEmployees = "DELETE FROM EMPLOYEES WHERE EMPLOYEE_ID > 0";
+        String queryHorses = "DELETE FROM HORSES WHERE HORSE_ID > 0";
+        String queryRidingCenters = "DELETE FROM RIDING_CENTERS WHERE RIDING_CENTER_ID > 0";
+        String queryLocation = "DELETE FROM LOCATIONS WHERE LOCATION_ID > 0";
+        String queryClient = "DELETE FROM CLIENTS WHERE CLIENT_ID > 0";
+
+        try{
+            statement.execute(queryHorses);
+            statement.execute(queryEmployees);
+            statement.execute(queryRidingCenters);
+            statement.execute(queryLocation);
+            statement.execute(queryClient);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+
     public void addLocation(Location _location){
         locations.add(_location);
         String action = "Added a new location in " + _location.getCountry() + " - " + _location.getCity();
         makeAudit(action);
+
+        String query = "INSERT INTO LOCATIONS VALUES(" + (0 + ", '" + _location.getCountry() + "', '" + _location.getCity()
+                + "', '" + _location.getStreet() + "', '" + _location.getNumber() + "', '"
+                + _location.getPostalCode() + "')");
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void showLocation(){
@@ -143,6 +188,19 @@ public class Service {
         }
         String action = "Show all locations";
         makeAudit(action);
+
+        String query = "SELECT COUNTRY, CITY, STREET, NUMBER, POSTAL_CODE FROM LOCATIONS";
+        try{
+            ResultSet resultSet = statement.executeQuery(query);
+            System.out.println("\nFrom Database: ");
+            while (resultSet.next()){
+                System.out.println(resultSet.getString(1) + ", " + resultSet.getString(2) + " ("
+                        + resultSet.getString(3) + " " + resultSet.getString(4) + " - "
+                        + resultSet.getString(5) + ")");
+            }
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     public Boolean checkLocation(Location _location){
@@ -158,6 +216,28 @@ public class Service {
         ridingCenters.add(_ridingCenter);
         String action = "Added a new riding center called " + _ridingCenter.getName();
         makeAudit(action);
+
+        Location location = _ridingCenter.getLocation();
+        int locationID = 0;
+
+        String query = "SELECT LOCATION_ID FROM LOCATIONS WHERE COUNTRY='" + location.getCountry() + "' AND CITY='" + location.getCity() + "' AND STREET='"
+                        + location.getStreet() + "' AND NUMBER='" + location.getNumber() + "' AND POSTAL_CODE='" + location.getPostalCode() + "'";
+        try{
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                locationID = resultSet.getInt(1);
+            }
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+
+        query = "INSERT INTO RIDING_CENTERS VALUES(" + (_ridingCenter.getId() + ", '" + _ridingCenter.getName() + "', '" + _ridingCenter.getStableNumber()
+                + "', '" + _ridingCenter.getStartProgram() + "', '" + _ridingCenter.getEndProgram() + "', '" + locationID + "')");
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void showRidingCenters(){
@@ -169,6 +249,22 @@ public class Service {
         }
         String action = "Show all riding centers";
         makeAudit(action);
+
+        String query = "SELECT NAME, START_PROGRAM, END_PROGRAM, COUNTRY, CITY " +
+                "FROM RIDING_CENTERS " +
+                "JOIN LOCATIONS ON RIDING_CENTERS.LOCATION_ID = LOCATIONS.LOCATION_ID";
+
+        try{
+            ResultSet resultSet = statement.executeQuery(query);
+            System.out.println("\nFrom Database: ");
+            while (resultSet.next()){
+                System.out.println(resultSet.getString(1) + " (" + resultSet.getString(2) + " - "
+                        + resultSet.getString(3) + ") -> " + resultSet.getString(4) + ", "
+                        + resultSet.getString(5));
+            }
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     public RidingCenter getRidingCenterById(int myId){
@@ -187,6 +283,15 @@ public class Service {
         ridingCenter.setHorses(horses);
         String action = "Added a new horse (" + _horse.getName() +  ") in " + ridingCenter.getName() + " Riding Center " ;
         makeAudit(action);
+
+        String query = "INSERT INTO HORSES VALUES(" + (_horse.getId() + ", '" + _horse.getName() + "', '" + _horse.getBreed()
+                + "', '" + _horse.getSex() + "', '" + _horse.getColor() + "', '" + _horse.getCategory().getName() +
+                "', '" + ridingCenterId + "', '" + _horse.getStable() + "')");
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void addArenaToRidingCenter(Arena _arena, int ridingCenterId){
@@ -204,6 +309,14 @@ public class Service {
         appointments.put(client, new ArrayList<>());
         String action = "Added a new client (" + client.getFirstName() + " " + client.getLastName() + ")";
         makeAudit(action);
+
+        String query = "INSERT INTO CLIENTS VALUES(" + (client.getId() + ", '" + client.getFirstName() + "', '" + client.getLastName()
+                        + "', '" + client.getEmail() + "', '" + client.getPhone() + "', '" + client.getBirthDate() + "')");
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void showClients() {
@@ -214,6 +327,18 @@ public class Service {
         }
         String action = "Show all clients";
         makeAudit(action);
+
+        String query = "SELECT LAST_NAME, FIRST_NAME, EMAIL, PHONE FROM CLIENTS";
+        try{
+            ResultSet resultSet = statement.executeQuery(query);
+            System.out.println("\nFrom Database: ");
+            while (resultSet.next()){
+                System.out.println(resultSet.getString(1) + " " + resultSet.getString(2) + " ("
+                        + resultSet.getString(3) + ", " + resultSet.getString(4) + ")");
+            }
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void addEmployeeToRidingCenter(Employee newEmployee, int ridingCenterId) {
@@ -224,6 +349,24 @@ public class Service {
         ridingCenter.setEmployees(employees);
         String action = "Added a new employee (" + newEmployee.getFirstName() + " " + newEmployee.getLastName() + ") at " + ridingCenter.getName() + " Riding Center";
         makeAudit(action);
+
+        String type = null;
+        if (newEmployee instanceof Trainer){
+            type = "trainer";
+        }
+        else {
+            type = "caretaker";
+        }
+
+        String query = "INSERT INTO EMPLOYEES VALUES(" + (newEmployee.getId() + ", '" + newEmployee.getLastName() + "', '" + newEmployee.getFirstName()
+                + "', '" + newEmployee.getEmail() + "', '" + newEmployee.getPhone() + "', '" + type + "', '" + newEmployee.getSalary() +
+                "', '" + newEmployee.getHireDate() + "', '" + ridingCenterId + "')");
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+
     }
 
     public void showAppointments(){
@@ -365,6 +508,13 @@ public class Service {
         }
         String action = "Changing " + client.getFirstName() + " " + client.getLastName() + " phone number in " + phoneNumber;
         makeAudit(action);
+
+        String query = "UPDATE CLIENTS SET PHONE = '" + phoneNumber + "' WHERE CLIENT_ID = " + client.getId();
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void changeEmailClient(Client client, String email) {
@@ -376,6 +526,13 @@ public class Service {
         }
         String action = "Changing " + client.getFirstName() + " " + client.getLastName() + " email in " + email;
         makeAudit(action);
+
+        String query = "UPDATE CLIENTS SET EMAIL = '" + email + "' WHERE CLIENT_ID = " + client.getId();
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
 
@@ -590,9 +747,22 @@ public class Service {
                 i ++ ;
             }
         }
-        System.out.println();
+
         String action = "Show our " + color + " horses";
         makeAudit(action);
+
+        String query = "SELECT NAME, BREED, COLOR FROM HORSES WHERE COLOR LIKE '%" + color + "%'";
+        try{
+            ResultSet resultSet = statement.executeQuery(query);
+            System.out.println("\nFrom Database: ");
+            while (resultSet.next()){
+                System.out.println(resultSet.getString(1) + " (" + resultSet.getString(2) + ") - " + resultSet.getString(3));
+            }
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+
+        System.out.println();
     }
 
     public void showClientContactDetails(Client client) {
@@ -640,6 +810,17 @@ public class Service {
         System.out.println();
         String action = "Show " + employee.getFirstName() + " " + employee.getLastName() + " contact details";
         makeAudit(action);
+
+        String query = "SELECT EMAIL, PHONE FROM EMPLOYEES WHERE EMPLOYEE_ID =" + employee.getId();
+        try{
+            ResultSet resultSet = statement.executeQuery(query);
+            System.out.println("\nFrom Database: ");
+            while (resultSet.next()){
+                System.out.println(resultSet.getString(1) + ", " + resultSet.getString(2));
+            }
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void showAgeClient(Client client) {
@@ -673,5 +854,183 @@ public class Service {
             throw new InvalidContactDetails("\nInvalid phone number!\n");
         if (!email.contains("@") || (!email.contains(".com") && !email.contains(".ro")))
             throw new InvalidContactDetails("\nInvalid email!\n");
+    }
+
+    public void deleteClient(Client client) {
+        for (Client client1 : clients){
+            if (client1.equals(client)){
+                clients.remove(client);
+                break;
+            }
+        }
+        System.out.println("\nClient deleted successfully!\n");
+
+        String action = "Client " + client.getFirstName() + " " + client.getLastName() + " deleted";
+        makeAudit(action);
+
+        String query = "DELETE FROM CLIENTS WHERE CLIENT_ID = " + client.getId();
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void deleteRidingCenter(Location location) {
+        String name = null;
+        for (RidingCenter ridingCenter : ridingCenters){
+            if (ridingCenter.getLocation().equals(location)){
+                name = ridingCenter.getName();
+                ridingCenters.remove(ridingCenter);
+                break;
+            }
+        }
+
+        String action = "Riding center " + name + " deleted";
+        makeAudit(action);
+
+        int locationId = 0;
+        String query = "SELECT LOCATION_ID FROM LOCATIONS WHERE COUNTRY='" + location.getCountry() + "' AND CITY='" + location.getCity() + "' AND STREET='"
+                + location.getStreet() + "' AND NUMBER='" + location.getNumber() + "' AND POSTAL_CODE='" + location.getPostalCode() + "'";
+        try{
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                locationId = resultSet.getInt(1);
+            }
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+
+        int ridingCenterId = 0;
+        query = "SELECT RIDING_CENTER_ID " +
+                "FROM RIDING_CENTERS " +
+                "WHERE LOCATION_ID = '" + locationId + "'";
+        try{
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()){
+                ridingCenterId = resultSet.getInt(1);
+            }
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+
+        query = "DELETE FROM HORSES WHERE RIDING_CENTER_ID = " + ridingCenterId;
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+
+        query = "DELETE FROM EMPLOYEES WHERE RIDING_CENTER_ID = " + ridingCenterId;
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+
+        query = "DELETE FROM RIDING_CENTERS WHERE LOCATION_ID = " + locationId;
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+
+        query = "DELETE FROM LOCATIONS WHERE LOCATION_ID = " + locationId;
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void changeSalary(Employee employeeToChange, int x, int ridingCenterId) {
+        double new_salary = 0;
+        int employee_id = 0;
+        for (RidingCenter ridingCenter : ridingCenters){
+            if (ridingCenter.getId() == ridingCenterId){
+                for (Employee employee : ridingCenter.getEmployees()){
+                    if (employee.equals(employeeToChange)){
+                        new_salary = employee.getSalary() + x;
+                        employee_id = employee.getId();
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+
+        String action = employeeToChange.getFirstName() + " " + employeeToChange.getLastName() + "'s salary increased by " + x;
+        makeAudit(action);
+
+        String query = "UPDATE EMPLOYEES SET SALARY = " + new_salary+ " WHERE EMPLOYEE_ID = " + employee_id;
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+
+        System.out.println("\nSalary changed!\n");
+    }
+
+    public void changeStableNumberRidingCenter(String ridingCenterID, int x) {
+        int new_stable_number = 0;
+        RidingCenter ridingCenterAction = null;
+        for (RidingCenter ridingCenter: ridingCenters){
+            if (ridingCenter.getId() == Integer.parseInt(ridingCenterID)){
+                new_stable_number = ridingCenter.getStableNumber() + x;
+                ridingCenterAction = ridingCenter;
+                ridingCenter.setStableNumber(new_stable_number);
+                break;
+            }
+        }
+
+        String query = "UPDATE RIDING_CENTERS SET STABLE_NUMBER = " + new_stable_number + " WHERE RIDING_CENTER_ID = " + ridingCenterID;
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+
+        String action = "Number of stables increased by " + x + " at " + ridingCenterAction.getName() + " Riding Center";
+        makeAudit(action);
+
+        System.out.println("\nNumber of stables increased successfully!\n");
+
+    }
+
+    public void moveHorse(String ridingCenterID, Horse horse, String newStable) throws InvalidStable {
+        RidingCenter ridingCenterAction = null;
+        for (RidingCenter ridingCenter: ridingCenters) {
+            if (ridingCenter.getId() == Integer.parseInt(ridingCenterID)) {
+                    ridingCenterAction = ridingCenter;
+                    break;
+            }
+        }
+        checkFreeStable(Integer.parseInt(newStable), ridingCenterAction);
+        checkExistentStable(Integer.parseInt(newStable), ridingCenterAction);
+
+        String action = "Move " + horse.getName() + " from stable " + horse.getStable() + " to stable " + newStable;
+        makeAudit(action);
+
+        for (RidingCenter ridingCenter: ridingCenters) {
+            if (ridingCenter.getId() == Integer.parseInt(ridingCenterID)) {
+                for (Horse horse1 : ridingCenter.getHorses()){
+                    if (horse1.equals(horse)){
+                        horse1.setStable(Integer.parseInt(newStable));
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        String query = "UPDATE HORSES SET STABLE = " + newStable + " WHERE HORSE_ID = " + horse.getId();
+        try{
+            statement.execute(query);
+        } catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+
+        System.out.println("\nHorse moved successfully!\n");
     }
 }

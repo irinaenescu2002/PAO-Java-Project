@@ -18,6 +18,7 @@ public class Main {
 
         Service service = Service.getInstance();
         Scanner scanner = new Scanner(System.in);
+        service.deleteRecords();
         service.addRecords();
         String command;
 
@@ -221,7 +222,7 @@ public class Main {
                             System.out.println("Hire Date: ");
                             String hireDate = scanner.next();
                             System.out.println("Salary: ");
-                            String salary = scanner.next();
+                            int salary = scanner.nextInt();
                             System.out.println("Office Number: ");
                             String officeNumber = scanner.next();
                             System.out.println("Work Days: ");
@@ -237,7 +238,7 @@ public class Main {
                                     String qualification = scanner.next();
 
                                     Trainer newEmployee = new Trainer(firstName, lastName, birthDate, phone,
-                                            email, hireDate, Integer.parseInt(salary), Integer.parseInt(officeNumber)
+                                            email, hireDate, salary, Integer.parseInt(officeNumber)
                                             , Arrays.stream(workDays.split(",")).toList(), Arrays.stream(skills.split(",")).toList(), qualification);
 
                                     service.addEmployeeToRidingCenter(newEmployee, Integer.parseInt(ridingCenterId));
@@ -254,7 +255,7 @@ public class Main {
                                     System.out.println(goodStables);
 
                                     Caretaker newEmployee = new Caretaker(firstName, lastName, birthDate, phone,
-                                            email, hireDate, Integer.parseInt(salary), Integer.parseInt(officeNumber)
+                                            email, hireDate, salary, Integer.parseInt(officeNumber)
                                             , Arrays.stream(workDays.split(",")).toList(), goodStables);
 
                                     service.addEmployeeToRidingCenter(newEmployee, Integer.parseInt(ridingCenterId));
@@ -562,6 +563,97 @@ public class Main {
                             }
                             System.out.println();
                         }
+                    }
+                }
+                case "22" -> {
+                    try {
+                        System.out.println("Please enter the client name!");
+                        System.out.println("First Name: ");
+                        String clientFirstName = scanner.next();
+                        System.out.println("Last Name: ");
+                        String clientLastName = scanner.next();
+                        Client client = service.getClientByName(clientFirstName, clientLastName);
+                        if (client == null) {
+                            String clientID = scanner.next();
+                            client = service.getClientByID(Integer.parseInt(clientID));
+                        }
+                        service.deleteClient(client);
+                    } catch (NoSuchElementException ex) {
+                        System.out.println("\nNo client with that name!\n");
+                    }
+                }
+                case "23" -> {
+                    System.out.println("Please enter details about the location!");
+                    System.out.println("Country: ");
+                    String country = scanner.next();
+                    System.out.println("City: ");
+                    String city = scanner.next();
+                    System.out.println("Street: ");
+                    String street = scanner.next();
+                    System.out.println("Number: ");
+                    String number = scanner.next();
+                    System.out.println("Postal Code: ");
+                    String postalCode = scanner.next();
+                    System.out.println();
+                    Location _location = new Location(country, city, street, number, postalCode);
+                    if (!service.checkLocation(_location)){
+                        System.out.println("No location with that specifications!\n");
+                    }
+                    else {
+                        service.deleteRidingCenter(_location);
+                        System.out.println("Riding center deleted successfully!\n");
+                    }
+                }
+                case "24" ->{
+                    try {
+                        System.out.println("Please enter the employee name and the riding center ID!");
+                        System.out.println("Riding Center ID: ");
+                        String ridingCenterID = scanner.next();
+                        System.out.println("First Name: ");
+                        String trainerFirstName = scanner.next();
+                        System.out.println("Last Name: ");
+                        String trainerLastName = scanner.next();
+                        Employee employee = service.getEmployeeByName(trainerFirstName, trainerLastName, Integer.parseInt(ridingCenterID));
+                        if (employee == null) {
+                            String employeeID = scanner.next();
+                            employee = service.getEmployeeById(Integer.parseInt(employeeID), Integer.parseInt(ridingCenterID));
+                        }
+                        System.out.println("Increase the salary by: ");
+                        int x = scanner.nextInt();
+                        service.changeSalary(employee, x, Integer.parseInt(ridingCenterID));
+                    } catch (NoSuchElementException ex) {
+                        System.out.println("\nNo employee with that name at this riding center!\n");
+                    }
+                    System.out.println();
+                }
+                case "25" -> {
+                    System.out.println("Please enter the riding center ID!");
+                    System.out.println("Riding Center ID: ");
+                    String ridingCenterID = scanner.next();
+                    System.out.println("Increase the number of stables by: ");
+                    int x = scanner.nextInt();
+                    service.changeStableNumberRidingCenter(ridingCenterID, x);
+                }
+                case "26" -> {
+                    try {
+                        System.out.println("Please enter the horse name and the riding center ID!");
+                        System.out.println("Riding Center ID: ");
+                        String ridingCenterID = scanner.next();
+                        System.out.println("Name: ");
+                        String horseName = scanner.next();
+                        System.out.println("New stable: ");
+                        String newStable = scanner.next();
+                        Horse horse = service.getHorseByName(horseName, Integer.parseInt(ridingCenterID));
+                        if (horse == null) {
+                            String horseId = scanner.next();
+                            horse = service.getHorseById(Integer.parseInt(horseId), Integer.parseInt(ridingCenterID));
+                        }
+                        service.moveHorse(ridingCenterID, horse, newStable);
+                    } catch (NoSuchElementException ex) {
+                        System.out.println("\nNo horse with that name at this riding center!\n");
+                    } catch (InvalidStable ex){
+                        System.out.println(ex.getMessage());
+                        System.out.println();
                     }
                 }
 

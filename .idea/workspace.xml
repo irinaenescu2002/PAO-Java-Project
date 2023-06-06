@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="87fdbe5e-7f01-4c8e-b49a-6344171dec7b" name="Changes" comment="Added Classes + 4 Commands">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PAO-Java-Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PAO-Java-Project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/audit.csv" beforeDir="false" afterPath="$PROJECT_DIR$/audit.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/horses/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/horses/Category.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +47,7 @@
     "database.data.extractors.current.export.id": "Comma-separated (CSV)_id",
     "database.data.extractors.current.id": "Comma-separated (CSV)_id",
     "jdk.selected.JAVA_MODULE": "corretto-18",
-    "last_opened_file_path": "E:/FACULTATE/ANUL II - SEMESTRUL II/PAO/PAO-Java-Project",
+    "last_opened_file_path": "E:/FACULTATE/ANUL II - SEMESTRUL II/PAO/PAO-Java-Project/lib/mysql-connector-j-8.0.33.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -81,7 +86,7 @@
       <workItem from="1684142482060" duration="5019000" />
       <workItem from="1684162933298" duration="4675000" />
       <workItem from="1685710417383" duration="42963000" />
-      <workItem from="1685984017689" duration="2156000" />
+      <workItem from="1685984017689" duration="22154000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1681819141772</created>
